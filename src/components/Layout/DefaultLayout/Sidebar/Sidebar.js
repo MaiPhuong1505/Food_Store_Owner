@@ -79,19 +79,19 @@ const Sidebar = () => {
           <Divider variant="middle" sx={{ borderStyle: 'dashed', borderColor: '#7D7D7E' }} />
           <List sx={{ paddingTop: 0 }}>
             <ListItemButton sx={{ pl: 9 }}>
-              <NavLink exact="true" to="/" style={({ isActive }) =>
+              <NavLink exact="true" to="/store/orders" style={({ isActive }) =>
                 isActive ? activeStyle : undefined
               }>Đơn hàng</NavLink>
             </ListItemButton>
             <Divider variant="middle" sx={{ borderStyle: 'dashed', borderColor: '#7D7D7E' }} />
             <ListItemButton sx={{ pl: 9 }}>
-              <NavLink exact="true" to="/" style={({ isActive }) =>
+              <NavLink to="/store/reviews" style={({ isActive }) =>
                 isActive ? activeStyle : undefined
               }>Đánh giá</NavLink>
             </ListItemButton>
             <Divider variant="middle" sx={{ borderStyle: 'dashed', borderColor: '#7D7D7E' }} />
             <ListItemButton sx={{ pl: 9 }}>
-              <NavLink exact="true" to="/" style={({ isActive }) =>
+              <NavLink to="/store/statistics" style={({ isActive }) =>
                 isActive ? activeStyle : undefined
               }>Thống kê</NavLink>
             </ListItemButton>
@@ -101,7 +101,9 @@ const Sidebar = () => {
             <ListItemIcon>
               <Discount sx={{ color: iconColor }} />
             </ListItemIcon>
-            <NavLink exact="true" to="/">Quản lý voucher</NavLink>
+            <NavLink exact="true" to="/store/vouchers" style={({ isActive }) =>
+                isActive ? activeStyle : undefined
+              }>Quản lý voucher</NavLink>
           </ListItemButton>
 
           {/* <ListItemButton sx={{ mt: 2 }}>

@@ -1,10 +1,11 @@
 import LogoOrange from '../../../../assets/images/LogoOrange.png'
-import * as React from 'react';
+import React, { useState } from 'react';
 import '../../../../css/header.css'
 import {
     NavLink,
     Link
 } from "react-router-dom";
+import { Typography } from '@mui/material';
 
 
 function Header() {
@@ -13,6 +14,16 @@ function Header() {
         paddingBottom: '15px',
         borderBottom: 'solid 5px #FF8357'
     };
+
+    // const [isLogin, setIsLogin] = useState(false)
+    let isLogin = false
+    const userName = localStorage.getItem("Name")
+    // const token = localStorage.getItem("AccessToken")
+
+    if (userName) {
+        isLogin = true
+    }
+
     return (
         <header>
             <div className='container'>
@@ -29,17 +40,30 @@ function Header() {
                             Đặt đồ ăn ngay
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink exact="true" to="/store" 
-                        style={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }
-                        >Đăng ký bán hàng
-                        </NavLink>
-                    </li>
+                    {isLogin ?
+                        <li>
+                            <NavLink exact="true" to="/store"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : undefined
+                                }
+                            >Cửa hàng của bạn
+                            </NavLink>
+                        </li>
+                        :
+                        <li>
+                            <NavLink exact="true" to="/introduction"
+                                style={({ isActive }) =>
+                                    isActive ? activeStyle : undefined
+                                }
+                            >Đăng ký bán hàng
+                            </NavLink>
+                        </li>
+                    }
+
                 </ul>
             </nav>
-            <Link to="/login">Đăng nhập</Link>
+            {isLogin ? <><Typography>{userName}</Typography> <Typography>Đăng xuất</Typography></> : <Link to="/login">Đăng nhập</Link>}
+
 
         </header>
     );

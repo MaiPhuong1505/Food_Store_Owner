@@ -18,6 +18,12 @@ import CreateFood from './pages/stores/CreateFood';
 import StoreRegister from './pages/stores/StoreRegister';
 import ViewFood from './pages/stores/ViewFood';
 import Topping from './pages/stores/Topping';
+import ViewOrders from './pages/stores/ViewOrders';
+import OrderDetail from './pages/stores/OrderDetail';
+import Reviews from './pages/stores/Reviews';
+import ViewVouchers from './pages/stores/ViewVouchers';
+import CreateVoucher from './pages/stores/CreateVoucher';
+import Statistics from './pages/stores/Statistics';
 
 
 function App() {
@@ -36,9 +42,15 @@ function App() {
           <Route path="/login" element={<Login/>}></Route>
           <Route path='/store' element={<><Store /></>}></Route>
           <Route path='/storeRegister' element={<><Header/><StoreRegister /></>}></Route>
-          <Route exact path='/store/food' element={<DefaultLayout><ViewFood/></DefaultLayout>}></Route>
+          <Route exact='true' path='/store/food' element={<DefaultLayout><ViewFood/></DefaultLayout>}></Route>
           <Route path='/store/food/createFood' element={<DefaultLayout><CreateFood/></DefaultLayout>}></Route>
           <Route path='/store/topping' element={<DefaultLayout><Topping/></DefaultLayout>}></Route>
+          <Route exact='true' path='/store/orders' element={<DefaultLayout><ViewOrders/></DefaultLayout>}></Route>
+          <Route path='/store/order/detail' element={<DefaultLayout><OrderDetail/></DefaultLayout>}></Route>
+          <Route path='/store/reviews' element={<DefaultLayout><Reviews/></DefaultLayout>}></Route>
+          <Route exact='true' path='/store/vouchers' element={<DefaultLayout><ViewVouchers/></DefaultLayout>}></Route>
+          <Route path='/store/vouchers/createVoucher' element={<DefaultLayout><CreateVoucher/></DefaultLayout>}></Route>
+          <Route path='/store/statistics' element={<DefaultLayout><Statistics/></DefaultLayout>}></Route>
           {/* <Route path='/store/food/updateFood/' element={<DefaultLayout><CreateFood/></DefaultLayout>}></Route> */}
           
         </Routes>
