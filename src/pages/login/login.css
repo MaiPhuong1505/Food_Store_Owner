@@ -2,14 +2,6 @@ body{
     background-color: #F9F9FB;
     color: #4D4D4D;
 }
-a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #89D5C9;
-}
-a:hover{
-    text-decoration: underline;
-}
 
 #heading{
     display: flex;

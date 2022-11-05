@@ -8,28 +8,31 @@ import PasswordIcon from '@mui/icons-material/Password';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { authService } from '../../services/auth.services';
-
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
+    let navigate = useNavigate()
+
     const [isSignup, setIsSignup] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [phoneNumber, setPhone] = useState("")
-
+    
     async function handleLogin() {
         if (isSignup) {
             let account = {
                 name, email, password, phoneNumber
             }
-            console.log(account)
+            // console.log(account)
             try {
                 const signup = await authService.register(account)
                 if (signup){
-                    console.log(signup.data)
+                    setIsSignup(!isSignup)
+                    setPassword("")
                 }
             } catch (error) {
-                console.log(error.response.data)
+                console.log(error.response)
             }
         } else {
             let account = {
@@ -39,7 +42,18 @@ const Login = () => {
             try {
                 const login = await authService.login(account);
                 if (login.data) {
-                    console.log(login.data)
+                    console.log("Login data: ", login.data)
+                    localStorage.setItem("UserId", login.data.id)
+                    localStorage.setItem("AccessToken", login.data.accessToken)
+                    localStorage.setItem("Name", login.data.name)
+                    localStorage.setItem("Roles", login.data.roles)
+                    var role = localStorage.getItem("Roles")
+                    if (role.includes("Owner")) {
+                        navigate("/store")
+                    } else if (!role.includes("Owner") && role.includes("User")){
+                        navigate("/storeRegister")
+                    }               
+                    
                 }
             } catch (error) {
                 console.log(error.response.data)
