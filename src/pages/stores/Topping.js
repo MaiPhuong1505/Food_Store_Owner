@@ -3,33 +3,45 @@ import { Delete, Edit } from '@mui/icons-material';
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import CreateTopping from '../../components/stores/CreateTopping';
+import { useEffect } from 'react';
+import { storeServices } from '../../services/stores.services';
 
 const Topping = () => {
   const [openCreateBox, setOpenCreateBox] = useState(false)
 
   const mainColor = '#89D5C9'
-  function createData(stt, name, price) {
-    return { stt, name, price };
-}
-  const openClick = () =>{
+
+  const openClick = () => {
     console.log("click")
     setOpenCreateBox(!openCreateBox)
   }
 
-const rows = [
-    createData(1, 'Trân châu đen', 5000),
-    createData(2, 'Trân châu trắng', 5000),
-    createData(3, 'Kem phô mai', 7000),
-    createData(4, 'Trứng cút', 3000),
-]
-  return (
-    <Stack 
+  const [toppingList, setToppingList] = useState([])
+  useEffect(() => {
+    async function getTopping(storeId, token) {
+      try {
+        const toppingData = await storeServices.getTopping(storeId, token)
+        if (toppingData) {
+          console.log(toppingData.data)
+          setToppingList(toppingData.data)
+        }
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    }
+    const token = localStorage.getItem("AccessToken")
+    const storeId = localStorage.getItem("StoreId")
+    getTopping(storeId, token)
+  }, [])
 
-    alignItems="flex-end"
-    sx={{
-      paddingY: 3,
-      paddingX: '10vw',
-    }}>
+  return (
+    <Stack
+
+      alignItems="flex-end"
+      sx={{
+        paddingY: 3,
+        paddingX: '10vw',
+      }}>
       <TableContainer component={Paper}>
         <Table size="small" sx={{ minWidth: 600 }} aria-label="simple table">
           <TableHead sx={{ borderBottom: '2px solid black' }}>
@@ -40,14 +52,14 @@ const rows = [
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {toppingList.map((topping, stt) => (
               <TableRow
-                key={row.name}
+                key={topping.ID}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="center">{row.stt}</TableCell>
-                <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.price}đ</TableCell>
+                <TableCell align="center">{++stt}</TableCell>
+                <TableCell align="center">{topping.Name}</TableCell>
+                <TableCell align="center">{topping.Price}đ</TableCell>
                 <TableCell align="center">
                   <IconButton
                   // onClick={editClick(row.stt)}
@@ -63,14 +75,14 @@ const rows = [
           </TableBody>
         </Table>
       </TableContainer>
-      {openCreateBox ? 
-      <CreateTopping stt={rows.length + 1} /> : null  
-    }
-      <Button 
-      variant='contained' size="large" 
-      onClick={openClick}
-      sx={{width: 'fit-content', marginTop: 2}}>
-      Thêm topping
+      {openCreateBox ?
+        <CreateTopping /> : null
+      }
+      <Button
+        variant='contained' size="large"
+        onClick={openClick}
+        sx={{ width: 'fit-content', marginTop: 2 }}>
+        Thêm topping
       </Button>
     </Stack>
   )

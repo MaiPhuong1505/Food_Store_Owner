@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import '../../../../css/header.css'
 import {
     NavLink,
-    Link
+    Link,
+    useNavigate
 } from "react-router-dom";
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 
 function Header() {
@@ -14,7 +15,7 @@ function Header() {
         paddingBottom: '15px',
         borderBottom: 'solid 5px #FF8357'
     };
-
+    let navigate = useNavigate()
     // const [isLogin, setIsLogin] = useState(false)
     let isLogin = false
     const userName = localStorage.getItem("Name")
@@ -24,6 +25,10 @@ function Header() {
         isLogin = true
     }
 
+    const logout = () => {
+        localStorage.clear()
+        navigate("/")
+    }
     return (
         <header>
             <div className='container'>
@@ -62,7 +67,7 @@ function Header() {
 
                 </ul>
             </nav>
-            {isLogin ? <><Typography>{userName}</Typography> <Typography>Đăng xuất</Typography></> : <Link to="/login">Đăng nhập</Link>}
+            {isLogin ? <><Typography>{userName}</Typography> <Button onClick={logout}>Đăng xuất</Button></> : <Link to="/login">Đăng nhập</Link>}
 
 
         </header>

@@ -7,8 +7,34 @@ import GrainIcon from '@mui/icons-material/Grain';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ToppingFood from '../../components/stores/ToppingFood';
 import CategorySelect from '../../components/stores/CategorySelect';
+import { useState } from 'react';
 
 const CreateFood = () => {
+    const ownerId = localStorage.getItem("UserId")
+    const [imageURL, setImageURL] = useState('') 
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState(0)
+    const [categoryID, setCategoryID] = useState('')
+    const [topping, setTopping] = useState([])
+    const [status, setStatus] = useState(true)
+
+    const getImageURL = (url) => {
+        setImageURL(url)
+    }
+
+    const getToppingSelected = (toppings) => {
+        Object.entries(toppings).map((key, value)=>{
+            if (value == true){
+                setTopping([
+                    ...topping, 
+                    {'ID': key}
+                ])
+            }
+        })        
+    }
+
+    console.log("topping", topping)
     return (
         <>
             <Box
@@ -20,7 +46,9 @@ const CreateFood = () => {
                 marginY={3}
                 marginX={12}
                 sx={{ backgroundColor: 'white' }}>
-                <UploadImage height='10vw' width='10vw' />
+
+                <UploadImage OwnerID={ownerId} fileName={name} getData={getImageURL} height='10vw' width='10vw' />
+
                 <Divider sx={{ marginY: 2 }} />
                 <Typography>
                     Tên món ăn <span style={{ color: "#E25B45" }}>*</span>
@@ -28,7 +56,8 @@ const CreateFood = () => {
                 <TextField
                     size='small' fullWidth margin="dense" type={'text'}
                     placeholder='Tên món ăn'
-                    variant="standard">
+                    variant="standard"
+                    onChange={(e) => setName(e.target.value)}>
                 </TextField>
                 <Typography>
                     Mô tả <span style={{ color: "#E25B45" }}>*</span>
@@ -36,7 +65,8 @@ const CreateFood = () => {
                 <TextField
                     size='small' fullWidth margin="dense" type={'text'}
                     placeholder='Nhập mô tả sản phẩm'
-                    variant="standard">
+                    variant="standard"
+                    onChange={(e) => setDescription(e.target.value)}>
                 </TextField>
                 <Divider sx={{ marginY: 2 }} />
                 <Grid container spacing={2}>
@@ -54,7 +84,8 @@ const CreateFood = () => {
                     <Grid item xs={7}>
                         <TextField
                             size='small' fullWidth margin="dense" type={'text'}
-                            variant="standard">
+                            variant="standard"
+                            onChange={(e) => setPrice(e.target.value)}>
                         </TextField>
                     </Grid>
                     <Grid item xs={5}
@@ -88,7 +119,7 @@ const CreateFood = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={7}>
-                        <ToppingFood/>
+                        <ToppingFood getData={getToppingSelected}/>
                     </Grid>
                     <Grid item xs={5}
                         sx={{
@@ -110,7 +141,7 @@ const CreateFood = () => {
                         <Typography>
                             Còn hàng
                         </Typography>
-                        <Checkbox defaultChecked></Checkbox>
+                        <Checkbox defaultChecked onChange={(e) => setStatus(e.target.checked)}></Checkbox>
                     </Grid>
                 </Grid>
             </Box>

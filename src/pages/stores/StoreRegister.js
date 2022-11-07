@@ -7,11 +7,14 @@ import theme from '../../theme';
 import UploadImage from '../../components/stores/UploadImage';
 import { storeServices } from '../../services/stores.services';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const StoreRegister = () => {
   const ownerId = localStorage.getItem("UserId")
   const token = localStorage.getItem("AccessToken")
+
+  let navigate = useNavigate()
 
   const [storeName, setStoreName] = useState('')
   const [storePhone, setStorePhone] = useState('')
@@ -88,7 +91,7 @@ const StoreRegister = () => {
   };
 
   async function handleSubmit(event) {
-  
+    console.log(address)
     const info = {
       name: storeName,
       phone: storePhone,
@@ -105,7 +108,7 @@ const StoreRegister = () => {
       NameBank : nameBank, 
       BankBranch : bankBranch,
       TaxID : taxID,
-      Categories : [categoriesId],
+      Categories : categoriesId,
       address: {
         Province: address['city'],
         District: address['district'],
@@ -121,6 +124,7 @@ const StoreRegister = () => {
       if (store)
       {
         console.log("Oke roi do")
+        navigate('/store')
       }
     } catch (error) {
       console.log(error.response.data)

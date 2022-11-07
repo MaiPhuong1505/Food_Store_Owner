@@ -32,5 +32,25 @@ export const storeServices = {
                     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })
-    }
+    },
+    getFood: async (id, token) => {
+        return await axios.get(
+            `https://takefoodstoreservice.azurewebsites.net/api/Food/GetAllFoodByStore?StoreID=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getTopping: async (id, token) => {
+        return await axios.get(
+            `https://takefoodstoreservice.azurewebsites.net/GetAllTopping/${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
 }

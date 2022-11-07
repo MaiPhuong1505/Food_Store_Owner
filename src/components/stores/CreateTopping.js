@@ -3,7 +3,7 @@ import { TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHea
 import { Box } from '@mui/system';
 import React from 'react'
 
-const CreateTopping = ({stt}) => {
+const CreateTopping = () => {
     return (
         // <Box sx={{ 
         //     padding: 3,
@@ -17,7 +17,7 @@ const CreateTopping = ({stt}) => {
                     <TableRow
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                        <TableCell align="center">{stt}</TableCell>
+                        {/* <TableCell align="center">{stt}</TableCell> */}
                         <TableCell align="center">
                             <TextField size='small' placeholder='Tên topping' />
                         </TableCell>
