@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const StoreRegister = () => {
   const ownerId = localStorage.getItem("UserId")
   const token = localStorage.getItem("AccessToken")
+  const [helperText, setHelperText] = useState('')
 
   let navigate = useNavigate()
 
@@ -87,28 +88,36 @@ const StoreRegister = () => {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-    setCategoriesId([{CategoryID: key.key.slice(2)}])
+    setCategoriesId([{ CategoryID: key.key.slice(2) }])
   };
+
+  const notifyText = (textField) => {
+    if (!textField) {
+      setHelperText('Hãy nhập thông tin')
+    } else {
+      setHelperText('')
+    }
+  }
 
   async function handleSubmit(event) {
     console.log(address)
     const info = {
       name: storeName,
       phone: storePhone,
-      urlStoreImage : urlStoreImage,
-      urlKitchenImage : urlKitchenImage,
-      urlMenuImage : urlMenuImage,
-      nameOwner : nameOwner,
-      cmnd : cmnd,
-      urlFontCmndImage : urlFontCmndImage,
-      urlBackCmndImage : urlBackCmndImage,
-      urlLicenseImage : urlLicenseImage,
-      nameSTKOwner : nameSTKOwner,
-      STK : stk,
-      NameBank : nameBank, 
-      BankBranch : bankBranch,
-      TaxID : taxID,
-      Categories : categoriesId,
+      urlStoreImage: urlStoreImage,
+      urlKitchenImage: urlKitchenImage,
+      urlMenuImage: urlMenuImage,
+      nameOwner: nameOwner,
+      cmnd: cmnd,
+      urlFontCmndImage: urlFontCmndImage,
+      urlBackCmndImage: urlBackCmndImage,
+      urlLicenseImage: urlLicenseImage,
+      nameSTKOwner: nameSTKOwner,
+      STK: stk,
+      NameBank: nameBank,
+      BankBranch: bankBranch,
+      TaxID: taxID,
+      Categories: categoriesId,
       address: {
         Province: address['city'],
         District: address['district'],
@@ -121,15 +130,14 @@ const StoreRegister = () => {
     console.log(info)
     try {
       const store = await storeServices.createStore(info, ownerId, token)
-      if (store)
-      {
+      if (store) {
         console.log("Oke roi do")
         navigate('/store')
       }
     } catch (error) {
       console.log(error.response.data)
     }
-    
+
   }
   return (
     <div>
@@ -156,6 +164,9 @@ const StoreRegister = () => {
             fullWidth required
             size='small' margin="dense" type={'text'}
             onChange={(e) => setStoreName(e.target.value)}
+            error={helperText}
+            helperText={helperText}
+            onBlur={() => notifyText(storeName)}
           >
           </TextField>
           <Typography mt={2}>
@@ -204,6 +215,9 @@ const StoreRegister = () => {
             size='small' margin="dense" type={'text'}
             placeholder="Số nhà, đường"
             onChange={(e) => setStreet(e.target.value)}
+            error={helperText}
+            helperText={helperText}
+            onBlur={() => notifyText(street)}
           >
           </TextField>
           <Divider sx={{ marginY: 2 }} />
@@ -247,7 +261,10 @@ const StoreRegister = () => {
               <TextField
                 size='small' fullWidth margin="dense" type={'text'}
                 placeholder='Tên chủ sở hữu'
-                onChange={(e) => setNameOwner(e.target.value)}>
+                onChange={(e) => setNameOwner(e.target.value)}
+                error={helperText}
+                helperText={helperText}
+                onBlur={() => notifyText(nameOwner)}>
               </TextField>
             </Grid>
             <Grid item xs={6}>
@@ -313,7 +330,10 @@ const StoreRegister = () => {
               </Typography>
               <TextField
                 size='small' fullWidth margin="dense" type={'text'}
-                onChange={(e) => setBankBranch(e.target.value)}>
+                onChange={(e) => setBankBranch(e.target.value)}
+                error={helperText}
+                helperText={helperText}
+                onBlur={() => notifyText(bankBranch)}>
               </TextField>
             </Grid>
           </Grid>

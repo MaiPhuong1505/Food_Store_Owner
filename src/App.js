@@ -15,6 +15,7 @@ import Store from './pages/stores';
 import RegisterIntroduction from './pages/RegisterIntroduction';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import CreateFood from './pages/stores/CreateFood';
+import UpdateFood from './pages/stores/UpdateFood';
 import StoreRegister from './pages/stores/StoreRegister';
 import ViewFood from './pages/stores/ViewFood';
 import Topping from './pages/stores/Topping';
@@ -27,34 +28,35 @@ import Statistics from './pages/stores/Statistics';
 
 
 function App() {
-  
+
   return (
     <>
-    {/* <CreateFood/> */}
-    {/* <StoreRegister /> */}
-    
+      {/* <CreateFood/> */}
+      {/* <StoreRegister /> */}
+
       <BrowserRouter>
 
         <Routes>
-          <Route exact="true" path="/" element={<><Header/><Home /></>}></Route>
-          <Route path="/downloadLink" element={<><Header/><DownloadLink /></>}></Route>
-          <Route path="/introduction" element={<><Header/><RegisterIntroduction /></>}></Route>          
-          <Route path="/login" element={<Login/>}></Route>
+          <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
+          <Route path="/downloadLink" element={<><Header /><DownloadLink /></>}></Route>
+          <Route path="/introduction" element={<><Header /><RegisterIntroduction /></>}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path='/store' element={<><Store /></>}></Route>
-          <Route path='/storeRegister' element={<><Header/><StoreRegister /></>}></Route>
-          <Route exact='true' path='/store/food' element={<DefaultLayout><ViewFood/></DefaultLayout>}></Route>
-          <Route path='/store/food/createFood' element={<DefaultLayout><CreateFood/></DefaultLayout>}></Route>
-          <Route path='/store/topping' element={<DefaultLayout><Topping/></DefaultLayout>}></Route>
-          <Route exact='true' path='/store/orders' element={<DefaultLayout><ViewOrders/></DefaultLayout>}></Route>
-          <Route path='/store/order/detail' element={<DefaultLayout><OrderDetail/></DefaultLayout>}></Route>
-          <Route path='/store/reviews' element={<DefaultLayout><Reviews/></DefaultLayout>}></Route>
-          <Route exact='true' path='/store/vouchers' element={<DefaultLayout><ViewVouchers/></DefaultLayout>}></Route>
-          <Route path='/store/vouchers/createVoucher' element={<DefaultLayout><CreateVoucher/></DefaultLayout>}></Route>
-          <Route path='/store/statistics' element={<DefaultLayout><Statistics/></DefaultLayout>}></Route>
+          <Route path='/storeRegister' element={<><Header /><StoreRegister /></>}></Route>
+          <Route exact='true' path='/store/food' element={<DefaultLayout><ViewFood /></DefaultLayout>}></Route>
+          <Route path='/store/food/createFood' element={<DefaultLayout><CreateFood /></DefaultLayout>}></Route>
+          <Route path='/store/food/updateFood/:id' element={<DefaultLayout><UpdateFood /></DefaultLayout>}></Route>
+          <Route path='/store/topping' element={<DefaultLayout><Topping /></DefaultLayout>}></Route>
+          <Route exact='true' path='/store/orders' element={<DefaultLayout><ViewOrders /></DefaultLayout>}></Route>
+          <Route path='/store/order/detail/:id' element={<DefaultLayout><OrderDetail /></DefaultLayout>}></Route>
+          <Route path='/store/reviews' element={<DefaultLayout><Reviews /></DefaultLayout>}></Route>
+          <Route exact='true' path='/store/vouchers' element={<DefaultLayout><ViewVouchers /></DefaultLayout>}></Route>
+          <Route path='/store/vouchers/createVoucher' element={<DefaultLayout><CreateVoucher /></DefaultLayout>}></Route>
+          <Route path='/store/statistics' element={<DefaultLayout><Statistics /></DefaultLayout>}></Route>
           {/* <Route path='/store/food/updateFood/' element={<DefaultLayout><CreateFood/></DefaultLayout>}></Route> */}
-          
+
         </Routes>
-        
+
       </BrowserRouter>
     </>
 

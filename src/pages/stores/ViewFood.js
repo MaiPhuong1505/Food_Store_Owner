@@ -11,31 +11,30 @@ const ViewFood = () => {
     const [foodList, setFoodList] = useState([])
     const mainColor = '#89D5C9'
     let navigate = useNavigate()
-
     useEffect(() => {
+
         async function getFood(storeId, token) {
-            try{
+            try {
                 const foodData = await storeServices.getFood(storeId, token)
                 if (foodData) {
-                    console.log(foodData.data)
                     setFoodList(foodData.data)
-                  }
-            }catch(error) {
+                }
+            } catch (error) {
                 console.log(error.response.data)
-              }
+            }
         }
-    const token = localStorage.getItem("AccessToken")
+        const token = localStorage.getItem("AccessToken")
         const storeId = localStorage.getItem("StoreId")
         getFood(storeId, token)
     }, [])
 
     //button them mon moi
-    const createClick = () =>{
+    const createClick = () => {
         navigate("/store/food/createFood")
     }
-    // const editClick = (id) => {
-    //     navigate(`store/food/updateFood/${id}`)
-    // }
+    const editClick = (id) => {
+        navigate(`updateFood/${id}`)
+    }
 
     return (
         <>
@@ -49,13 +48,13 @@ const ViewFood = () => {
                         Tổng số món ăn: <span style={{ color: mainColor }}>{foodList.length}</span>
                     </Typography>
                     <Button variant='contained' onClick={createClick}>
-                    Thêm món
+                        Thêm món
                     </Button>
                 </Box>
 
                 <TableContainer component={Paper}>
                     <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead sx={{ borderBottom: '2px solid black'}}>
+                        <TableHead sx={{ borderBottom: '2px solid black' }}>
                             <TableRow>
                                 <TableCell align="center">STT</TableCell>
                                 <TableCell align="center">Tên</TableCell>
@@ -68,7 +67,7 @@ const ViewFood = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {foodList.map((food, i=0) => (
+                            {foodList.map((food, i = 0) => (
                                 <TableRow
                                     key={food.FoodId}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -77,20 +76,20 @@ const ViewFood = () => {
                                     <TableCell align="center">{food.Name}</TableCell>
                                     <TableCell align="left">{food.Dscription}</TableCell>
                                     <TableCell align="center">
-                                        <img src={food.UrlImage} style={{height: 100, width: 100, overflow: 'hidden'}}/>
+                                        <img src={food.UrlImage} style={{ height: 100, width: 100, overflow: 'hidden' }} />
                                     </TableCell>
-                                    <TableCell align="center">{food.Price}đ</TableCell>
+                                    <TableCell align="center">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(food.Price)}</TableCell>
                                     <TableCell align="center">{food.Category}</TableCell>
                                     <TableCell align="center">{food.ListTopping.join(', ')}</TableCell>
                                     <TableCell align="center">{food.State}</TableCell>
                                     <TableCell align="center">
-                                        <IconButton 
-                                        // onClick={editClick(row.stt)}
+                                        <IconButton
+                                            onClick={() => editClick(food.FoodId)}
                                         >
-                                            <Edit sx={{color: mainColor}}/>
+                                            <Edit sx={{ color: mainColor }} />
                                         </IconButton>
                                         <IconButton>
-                                            <Delete sx={{color: '#E25B45'}}/>
+                                            <Delete sx={{ color: '#E25B45' }} />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>

@@ -6,20 +6,31 @@ import {
 
 import React, { useEffect, useState } from 'react'
 import { Visibility } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { storeServices } from '../../services/stores.services';
 
 const ViewOrders = () => {
+    const [orders, setOrders] = useState([])
+
     let navigate = useNavigate()
-    function createData(stt, name, address, phone, total, date, state) {
-        return { stt, name, address, phone, total, date, state };
+    const token = localStorage.getItem("AccessToken")
+    const storeId = localStorage.getItem("StoreId")
+
+    const getOrders = async (id, token) => {
+        try {
+            const orders = await storeServices.getOrders(id, token)
+            if (orders.data) {
+                console.log("orders", orders.data)
+                setOrders(orders.data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    const rows = [
-        createData(1, 'Nguyễn Văn C', '12 đường số 1, Liên Chiểu, TP. Đà Nẵng', 
-        '0987654321', 45000, '17:00 ngày 4/10/2022', 'Đang xử lý'),
-        createData(2, 'Lê Thị D', '31 đường A, Thanh Khê, TP. Đà Nẵng', 
-        '0123654789', 63000, '16:00 ngày 4/10/2022', 'Đã giao hàng'),
-    ]
+    useEffect(() => {
+        getOrders(storeId, token)
+    }, [])
 
     const stateList = [
         "Đơn hàng mới",
@@ -31,8 +42,8 @@ const ViewOrders = () => {
     const handleChange = (event) => {
         setStateOrder(event.target.value)
     }
-    const editClick = () => {
-        navigate('/store/order/detail')
+    const editClick = (id) => {
+        navigate(`/store/order/detail/${id}`)
     }
     const mainColor = '#89D5C9'
     return (
@@ -40,7 +51,7 @@ const ViewOrders = () => {
             <Stack
                 spacing={2} sx={{
                     margin: 3,
-                    padding: 3, 
+                    padding: 3,
                     backgroundColor: 'white',
                     boxShadow: '0px 0px 3px grey'
                 }}
@@ -48,8 +59,8 @@ const ViewOrders = () => {
                 <Box
                     display="flex"
                     justifyContent={"space-between"}>
-                    <TextField placeholder='Tìm kiếm' size='small' sx={{minWidth: '20vw'}}/>
-                    <FormControl size="small" sx={{minWidth: '20vw'}}>
+                    <TextField placeholder='Tìm kiếm' size='small' sx={{ minWidth: '20vw' }} />
+                    <FormControl size="small" sx={{ minWidth: '20vw' }}>
                         <InputLabel id="demo-select-small">Trạng thái</InputLabel>
                         <Select
                             autoWidth
@@ -67,7 +78,7 @@ const ViewOrders = () => {
                         </Select>
                     </FormControl>
                 </Box>
-                <Divider/>
+                <Divider />
                 <TableContainer component={Paper}>
                     <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead sx={{ borderBottom: '2px solid black' }}>
@@ -83,24 +94,35 @@ const ViewOrders = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
+                            {orders.map((order, stt) => (
                                 <TableRow
-                                    key={row.name}
+                                    key={order.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align="center">{row.stt}</TableCell>
-                                    <TableCell align="center">{row.name}</TableCell>
-                                    <TableCell align="center">{row.address}</TableCell>
-                                    <TableCell align="center">{row.phone}</TableCell>
-                                    <TableCell align="center">{row.total} đ</TableCell>
-                                    <TableCell align="center">{row.date}</TableCell>
-                                    <TableCell align="center">{row.state}</TableCell>
-                                    {/* address, phone, total, date, state */}
+                                    <TableCell align="center">{++stt}</TableCell>
+                                    <TableCell align="center">{order.nameUser}</TableCell>
+                                    <TableCell align="center">{order.address}</TableCell>
+                                    <TableCell align="center">{order.sdt}</TableCell>
+                                    <TableCell align="center">{order.totalPrice} đ</TableCell>
+                                    <TableCell align="center">
+                                        {new Intl.DateTimeFormat('vi-VN', {
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            hour12: false,
+                                            month: 'numeric',
+                                            day: 'numeric',
+                                            weekday: 'long',
+                                            year: 'numeric',
+                                            timeZone: 'Asia/Ho_Chi_Minh',
+                                        }).format(Date.parse(order.dateOrder))}
+                                    </TableCell>
+                                    <TableCell align="center">{order.state}</TableCell>
                                     <TableCell align="center">
                                         <IconButton
-                                        onClick={editClick}
+                                            onClick={() => editClick(order.id)}
                                         >
-                                            <Visibility sx={{color: mainColor}}/>
+                                            
+                                            <Visibility sx={{ color: mainColor }} />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>

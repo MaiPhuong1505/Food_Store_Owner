@@ -1,9 +1,31 @@
 import { Save } from '@mui/icons-material';
 import { TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react'
+import React, { useState } from 'react'
+import { storeServices } from '../../services/stores.services';
 
 const CreateTopping = () => {
+    const storeId = localStorage.getItem('StoreId')
+    const token = localStorage.getItem('AccessToken')
+
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState('')
+
+    const handleSubmit = async () => {
+        let info = {
+            Name: name,
+            Price: price
+        }
+        try {
+            const topping = await storeServices.createTopping(info, storeId, token)
+            if (topping) {
+                console.log('Tao topping thanh cong', topping)
+            }
+        } catch (error) {
+            console.log(error.response.data)
+        }
+    }
+
     return (
         // <Box sx={{ 
         //     padding: 3,
@@ -19,13 +41,15 @@ const CreateTopping = () => {
                     >
                         {/* <TableCell align="center">{stt}</TableCell> */}
                         <TableCell align="center">
-                            <TextField size='small' placeholder='Tên topping' />
+                            <TextField size='small' placeholder='Tên topping'
+                                onChange={(e) => setName(e.target.value)} />
                         </TableCell>
                         <TableCell align="center">
-                        <TextField size='small' placeholder='Giá' />
+                            <TextField size='small' placeholder='Giá'
+                                onChange={(e) => setPrice(e.target.value)} />
                         </TableCell>
                         <TableCell align="center">
-                            <Button variant="outlined" endIcon={<Save/>}>
+                            <Button variant="outlined" endIcon={<Save />} onClick={handleSubmit}>
                                 Lưu
                             </Button>
                         </TableCell>
