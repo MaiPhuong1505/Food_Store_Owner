@@ -76,6 +76,17 @@ export const storeServices = {
             }
         )
     },
+    deleteFood: async (id, token) => {
+        return await axios.delete(
+            `https://takefoodstoreservice.azurewebsites.net/api/Food?id=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    }
+    ,
     getTopping: async (id, token) => {
         return await axios.get(
             `https://takefoodstoreservice.azurewebsites.net/GetToppingActive/${id}`,

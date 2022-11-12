@@ -1,5 +1,5 @@
-import { Delete, Edit } from '@mui/icons-material';
-import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Block, Edit } from '@mui/icons-material';
+import { Button, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import React from 'react'
 import { useState } from 'react';
@@ -9,10 +9,14 @@ import { storeServices } from '../../services/stores.services';
 
 const ViewFood = () => {
     const [foodList, setFoodList] = useState([])
+    const [isLoading, setLoading] = useState(true)
+
     const mainColor = '#89D5C9'
+    const token = localStorage.getItem("AccessToken")
+    const storeId = localStorage.getItem("StoreId")
+
     let navigate = useNavigate()
     useEffect(() => {
-
         async function getFood(storeId, token) {
             try {
                 const foodData = await storeServices.getFood(storeId, token)
@@ -21,10 +25,10 @@ const ViewFood = () => {
                 }
             } catch (error) {
                 console.log(error.response.data)
+            } finally {
+                setLoading(false)
             }
         }
-        const token = localStorage.getItem("AccessToken")
-        const storeId = localStorage.getItem("StoreId")
         getFood(storeId, token)
     }, [])
 
@@ -33,72 +37,102 @@ const ViewFood = () => {
         navigate("/store/food/createFood")
     }
     const editClick = (id) => {
-        navigate(`updateFood/${id}`)
+        navigate(`/store/food/updateFood/${id}`)
+    }
+
+    const handleDelete = (id) => {
+        const deleteFood = async () => {
+            try {
+                const deletedFood = await storeServices.deleteFood(id, token)
+                if (deletedFood) {
+                    console.log("xoa dc roi")
+                }
+            } catch (error) {
+                console.log(error)
+
+            }
+        }
+        if (window.confirm("Món ăn này đã hết hàng?")) {
+            deleteFood(id, token)
+        } else return
     }
 
     return (
-        <>
-            <Stack spacing={2} sx={{
-                padding: 3
-            }}>
-                <Box
-                    display="flex"
-                    justifyContent={"space-between"}>
-                    <Typography>
-                        Tổng số món ăn: <span style={{ color: mainColor }}>{foodList.length}</span>
-                    </Typography>
-                    <Button variant='contained' onClick={createClick}>
-                        Thêm món
-                    </Button>
-                </Box>
 
-                <TableContainer component={Paper}>
-                    <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead sx={{ borderBottom: '2px solid black' }}>
-                            <TableRow>
-                                <TableCell align="center">STT</TableCell>
-                                <TableCell align="center">Tên</TableCell>
-                                <TableCell align="center">Mô tả</TableCell>
-                                <TableCell align="center">Hình ảnh</TableCell>
-                                <TableCell align="center">Giá</TableCell>
-                                <TableCell align="center">Danh mục</TableCell>
-                                <TableCell align="center">Topping</TableCell>
-                                <TableCell align="center">Trạng thái</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {foodList.map((food, i = 0) => (
-                                <TableRow
-                                    key={food.FoodId}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">{++i}</TableCell>
-                                    <TableCell align="center">{food.Name}</TableCell>
-                                    <TableCell align="left">{food.Dscription}</TableCell>
-                                    <TableCell align="center">
-                                        <img src={food.UrlImage} style={{ height: 100, width: 100, overflow: 'hidden' }} />
-                                    </TableCell>
-                                    <TableCell align="center">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(food.Price)}</TableCell>
-                                    <TableCell align="center">{food.Category}</TableCell>
-                                    <TableCell align="center">{food.ListTopping.join(', ')}</TableCell>
-                                    <TableCell align="center">{food.State}</TableCell>
-                                    <TableCell align="center">
-                                        <IconButton
-                                            onClick={() => editClick(food.FoodId)}
+        <Stack spacing={2} sx={{
+            padding: 3
+        }}>
+            {
+                isLoading ? (
+                    <CircularProgress />
+                ) : (
+                    <>
+                        <Box
+                            display="flex"
+                            justifyContent={"space-between"}>
+                            <Typography>
+                                Tổng số món ăn: <span style={{ color: mainColor }}>{foodList.length}</span>
+                            </Typography>
+                            <Button variant='contained' onClick={createClick}>
+                                Thêm món
+                            </Button>
+                        </Box>
+
+                        <TableContainer component={Paper}>
+                            <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead sx={{ borderBottom: '2px solid black' }}>
+                                    <TableRow>
+                                        <TableCell align="center">STT</TableCell>
+                                        <TableCell align="center">Tên</TableCell>
+                                        <TableCell align="center">Mô tả</TableCell>
+                                        <TableCell align="center">Hình ảnh</TableCell>
+                                        <TableCell align="center">Giá</TableCell>
+                                        <TableCell align="center">Danh mục</TableCell>
+                                        <TableCell align="center">Topping</TableCell>
+                                        <TableCell align="center">Trạng thái</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {foodList.map((food, i = 0) => (
+                                        <TableRow
+                                            key={food.FoodId}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <Edit sx={{ color: mainColor }} />
-                                        </IconButton>
-                                        <IconButton>
-                                            <Delete sx={{ color: '#E25B45' }} />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Stack>
-        </>
+                                            <TableCell align="center">{++i}</TableCell>
+                                            <TableCell align="center">{food.Name}</TableCell>
+                                            <TableCell align="left">{food.Dscription}</TableCell>
+                                            <TableCell align="center">
+                                                <img src={food.UrlImage} style={{ height: 100, width: 100, overflow: 'hidden' }} />
+                                            </TableCell>
+                                            <TableCell align="center">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(food.Price)}</TableCell>
+                                            <TableCell align="center">{food.Category}</TableCell>
+                                            <TableCell align="center">
+                                                {food.ListTopping.map((topping) =>
+                                                    topping.name
+                                                ).join(', ')}
+                                            </TableCell>
+                                            <TableCell align="center">{food.State}</TableCell>
+                                            <TableCell align="center">
+                                                <IconButton
+                                                    onClick={() => editClick(food.FoodId)}
+                                                >
+                                                    <Edit sx={{ color: mainColor }} />
+                                                </IconButton>
+                                                <IconButton onClick={() => handleDelete(food.FoodId)}>
+                                                    <Block sx={{ color: '#E25B45' }} />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </>
+                )
+            }
+
+        </Stack>
+
     )
 }
 

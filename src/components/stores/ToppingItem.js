@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
-import { Delete, Edit, Save } from '@mui/icons-material';
+import { IconButton, TableCell, TableRow, TextField, } from '@mui/material';
+import { Close, Delete, Edit, Save } from '@mui/icons-material';
 import { storeServices } from '../../services/stores.services';
-import { async } from '@firebase/util';
-
 
 const ToppingItem = ({ topping, stt }) => {
 
@@ -12,25 +10,25 @@ const ToppingItem = ({ topping, stt }) => {
   const [openEdit, setOpenEdit] = useState(false)
   const [editTopping, setEditTopping] = useState(topping)
 
-
-  const handleDelete = (id) => {
+  const handleDelete = () => {
     async function deleteTopping(toppingId, token) {
       try {
         const d = await storeServices.deleteTopping(toppingId, token)
         if (d) {
           console.log("xoa dc roi")
-
         }
       } catch (error) {
         console.log(error.response.data)
       }
     }
-    const storeId = localStorage.getItem("StoreId")
 
-    deleteTopping(storeId, token)
+    if (window.confirm("Bạn chắc chắn muốn xoá topping này?")) {
+      deleteTopping(topping.ID, token)
+    } else return
   }
 
   const handleEdit = () => {
+    console.log("click ne")
     setOpenEdit(!openEdit)
   }
   const handleChange = (e) => {
@@ -42,7 +40,6 @@ const ToppingItem = ({ topping, stt }) => {
     })
   }
   const handleKeyDown = (e) => {
-    console.log("key", e.key)
     if (e.key === '-' || e.key === '.') {
       e.preventDefault()
       return
@@ -78,17 +75,29 @@ const ToppingItem = ({ topping, stt }) => {
           (new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(editTopping.Price))}
       </TableCell>
       <TableCell align="center">
-        <IconButton
-        >
-          {
-            openEdit ? <Save sx={{ color: mainColor }} onClick={handleSubmit} /> :
-              <Edit sx={{ color: mainColor }} onClick={handleEdit} />
-          }
-
-        </IconButton>
-        <IconButton onClick={() => handleDelete(topping.ID)}>
-          <Delete sx={{ color: '#E25B45' }} />
-        </IconButton>
+        {
+          openEdit ?
+            (<IconButton onClick={handleSubmit}>
+              <Save sx={{ color: mainColor }} />
+            </IconButton>) :
+            (
+              <IconButton onClick={handleEdit} >
+                <Edit sx={{ color: mainColor }} />
+              </IconButton>
+            )
+        }
+        {
+          openEdit ? (
+            <IconButton onClick={handleEdit}>
+              <Close sx={{ color: 'grey' }} />
+            </IconButton>
+          ) :
+            (
+              <IconButton onClick={handleDelete}>
+                <Delete sx={{ color: '#E25B45' }} />
+              </IconButton>
+            )
+        }
       </TableCell>
     </TableRow>
   )

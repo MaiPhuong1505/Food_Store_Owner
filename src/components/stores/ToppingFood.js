@@ -13,7 +13,6 @@ const ToppingFood = ({ getData, toppingIds }) => {
             try {
                 const toppingData = await storeServices.getTopping(storeId, token)
                 if (toppingData) {
-                    console.log(toppingData.data)
                     setToppingList(toppingData.data)
                 }
             } catch (error) {
@@ -23,19 +22,8 @@ const ToppingFood = ({ getData, toppingIds }) => {
         const token = localStorage.getItem("AccessToken")
         const storeId = localStorage.getItem("StoreId")
         getTopping(storeId, token)
+        getData(toppingIds)
     }, [])
-    console.log('toppingList', toppingList)
-
-    // const [selected, setSelected] = useState([])
-    const handleChange = (event) => {
-        // if (event.target.checked){
-        setSelectedChange({
-            ...selectedChange,
-            [event.target.name]: event.target.checked,
-        });
-        getData(selectedChange)
-        // }
-    };
 
     const handleSelectTopping = (e, id) => {
         const newValue = e.target.checked ? [...selectedChange, id] : selectedChange.filter(item => item !== id)

@@ -17,15 +17,12 @@ const UpdateFood = () => {
     const { id } = useParams()
 
     const ownerId = localStorage.getItem("UserId")
-    const storeId = localStorage.getItem("StoreId")
     const token = localStorage.getItem("AccessToken")
 
     const navigate = useNavigate()
 
     const [foodInfo, setFoodInfo] = useState({})
-
     const [imageURL, setImageURL] = useState('')
-
     const [categoryID, setCategoryID] = useState('')
     const [toppingList, setToppingList] = useState([])
 
@@ -43,7 +40,6 @@ const UpdateFood = () => {
                 setFoodInfo(food.data)
                 setCategoryID(food.data.Category)
                 setImageURL(food.data.UrlImage)
-                console.log(food.data)
             }
         } catch (error) {
 
@@ -72,7 +68,6 @@ const UpdateFood = () => {
         const ListTopping = toppingList.map((topping) => ({
             'ID': topping
         }))
-
         let info = {
             Name: foodInfo.Name,
             Description: foodInfo.Dscription,
@@ -84,7 +79,7 @@ const UpdateFood = () => {
         }
 
         try {
-            const food = await storeServices.updateFood(storeId, info, token)
+            const food = await storeServices.updateFood(id, info, token)
             if (food) {
                 navigate('/store/food')
             }

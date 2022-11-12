@@ -17,7 +17,6 @@ const CategorySelect = ({ getData, categoryId }) => {
     const response = await storeServices.getCategories()
     if (response.data) {
       setCategoryList(response.data)
-      console.log(response.data)
     }
   }
   useEffect(() => {

@@ -19,7 +19,6 @@ const Topping = () => {
   }
   const token = localStorage.getItem("AccessToken")
   const storeId = localStorage.getItem("StoreId")
-  const mainColor = '#89D5C9'
 
   async function getTopping(storeId, token) {
     try {
@@ -36,7 +35,7 @@ const Topping = () => {
 
   useEffect(() => {
     getTopping(storeId, token)
-    console.log("topping list", toppingList)
+    // console.log("topping list", toppingList)
   }, [])
 
 
