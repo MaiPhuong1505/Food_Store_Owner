@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Divider, Grid, ListItemText, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import moment from 'moment/moment'
 
 const CreateVoucher = () => {
+    const [value, setValue] = useState(moment().format('MMMM Do YYYY, h:mm:ss'))
     return (
         <>
             <Box
@@ -51,17 +55,17 @@ const CreateVoucher = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography>
-                            Mức giảm giá <span style={{ color: "#E25B45" }}>*</span>
+                            Mức giảm giá (%) <span style={{ color: "#E25B45" }}>*</span>
                         </Typography>
                     </Grid>
-                    <Grid item xs={8}>
-                        <TextField                        
+                    <Grid item xs={12}>
+                        <TextField
                             size='small' fullWidth margin="dense" type={'text'}
                             variant="standard"
                             placeholder='Nhập giá trị'>
                         </TextField>
                     </Grid>
-                    <Grid item xs={4}>
+                    {/* <Grid item xs={4}>
                         <Select
                             size='small'
                             fullWidth
@@ -75,7 +79,7 @@ const CreateVoucher = () => {
                                 <ListItemText primary={'%'} />
                             </MenuItem>
                         </Select>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={5}>
                         <Typography>
                             Mức giảm tối đa <span style={{ color: "#E25B45" }}>*</span>
@@ -90,28 +94,40 @@ const CreateVoucher = () => {
                     </Grid>
                 </Grid>
                 <Divider sx={{ border: '2px solid lightgrey', marginY: 2 }} />
-                <Grid container>
+                <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Typography>
                             Ngày áp dụng <span style={{ color: "#E25B45" }}>*</span>
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
-                            size='small' fullWidth margin="dense" type={'text'}
-                            variant="standard">
-                        </TextField>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                renderInput={(props) => <TextField {...props} />}
+                                label="Ngày áp dụng"
+                                value={value}
+                                onChange={(newValue) => {
+                                    setValue(newValue);
+                                }}
+                            />
+                        </LocalizationProvider>
                     </Grid>
                     <Grid item xs={6}>
                         <Typography>
-                        Ngày hết hạn <span style={{ color: "#E25B45" }}>*</span>
+                            Ngày hết hạn <span style={{ color: "#E25B45" }}>*</span>
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
-                            size='small' fullWidth margin="dense" type={'text'}
-                            variant="standard">
-                        </TextField>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                renderInput={(props) => <TextField {...props} />}
+                                label="Ngày hết hạn"
+                                value={value}
+                                onChange={(newValue) => {
+                                    setValue(newValue);
+                                }}
+                            />
+                        </LocalizationProvider>
                     </Grid>
                 </Grid>
             </Box>

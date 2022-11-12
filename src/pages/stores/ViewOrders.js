@@ -1,7 +1,7 @@
 import { Stack, Box } from '@mui/system'
 import {
     Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField,
-    InputLabel, ListItemText, MenuItem, Select, FormControl, IconButton
+    InputLabel, ListItemText, MenuItem, Select, FormControl, IconButton, CircularProgress
 } from '@mui/material';
 
 import React, { useEffect, useState } from 'react'
@@ -11,6 +11,7 @@ import { storeServices } from '../../services/stores.services';
 
 const ViewOrders = () => {
     const [orders, setOrders] = useState([])
+    const [isLoading, setLoading] = useState(true)
 
     let navigate = useNavigate()
     const token = localStorage.getItem("AccessToken")
@@ -25,6 +26,8 @@ const ViewOrders = () => {
             }
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -79,57 +82,60 @@ const ViewOrders = () => {
                     </FormControl>
                 </Box>
                 <Divider />
-                <TableContainer component={Paper}>
-                    <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead sx={{ borderBottom: '2px solid black' }}>
-                            <TableRow>
-                                <TableCell align="center">STT</TableCell>
-                                <TableCell align="center">Tên</TableCell>
-                                <TableCell align="center">Địa chỉ</TableCell>
-                                <TableCell align="center">SĐT</TableCell>
-                                <TableCell align="center">Thành tiền</TableCell>
-                                <TableCell align="center">Ngày đặt hàng</TableCell>
-                                <TableCell align="center">Trạng thái</TableCell>
+                {isLoading ? <CircularProgress /> :
+                    <TableContainer component={Paper}>
+                        <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead sx={{ borderBottom: '2px solid black' }}>
+                                <TableRow>
+                                    <TableCell align="center">STT</TableCell>
+                                    <TableCell align="center">Tên</TableCell>
+                                    <TableCell align="center">Địa chỉ</TableCell>
+                                    <TableCell align="center">SĐT</TableCell>
+                                    <TableCell align="center">Thành tiền</TableCell>
+                                    <TableCell align="center">Ngày đặt hàng</TableCell>
+                                    <TableCell align="center">Trạng thái</TableCell>
 
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {orders.map((order, stt) => (
-                                <TableRow
-                                    key={order.id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">{++stt}</TableCell>
-                                    <TableCell align="center">{order.nameUser}</TableCell>
-                                    <TableCell align="center">{order.address}</TableCell>
-                                    <TableCell align="center">{order.sdt}</TableCell>
-                                    <TableCell align="center">{order.totalPrice} đ</TableCell>
-                                    <TableCell align="center">
-                                        {new Intl.DateTimeFormat('vi-VN', {
-                                            hour: 'numeric',
-                                            minute: 'numeric',
-                                            hour12: false,
-                                            month: 'numeric',
-                                            day: 'numeric',
-                                            weekday: 'long',
-                                            year: 'numeric',
-                                            timeZone: 'Asia/Ho_Chi_Minh',
-                                        }).format(Date.parse(order.dateOrder))}
-                                    </TableCell>
-                                    <TableCell align="center">{order.state}</TableCell>
-                                    <TableCell align="center">
-                                        <IconButton
-                                            onClick={() => editClick(order.id)}
-                                        >
-                                            
-                                            <Visibility sx={{ color: mainColor }} />
-                                        </IconButton>
-                                    </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {orders.map((order, stt) => (
+                                    <TableRow
+                                        key={order.id}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell align="center">{++stt}</TableCell>
+                                        <TableCell align="center">{order.nameUser}</TableCell>
+                                        <TableCell align="center">{order.address}</TableCell>
+                                        <TableCell align="center">{order.sdt}</TableCell>
+                                        <TableCell align="center">{order.totalPrice} đ</TableCell>
+                                        <TableCell align="center">
+                                            {new Intl.DateTimeFormat('vi-VN', {
+                                                hour: 'numeric',
+                                                minute: 'numeric',
+                                                hour12: false,
+                                                month: 'numeric',
+                                                day: 'numeric',
+                                                weekday: 'long',
+                                                year: 'numeric',
+                                                timeZone: 'Asia/Ho_Chi_Minh',
+                                            }).format(Date.parse(order.dateOrder))}
+                                        </TableCell>
+                                        <TableCell align="center">{order.state}</TableCell>
+                                        <TableCell align="center">
+                                            <IconButton
+                                                onClick={() => editClick(order.id)}
+                                            >
+
+                                                <Visibility sx={{ color: mainColor }} />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                }
+
             </Stack>
         </>
     )

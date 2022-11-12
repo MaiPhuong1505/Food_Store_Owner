@@ -149,4 +149,14 @@ export const storeServices = {
             }
         )
     },
+    getVouchers: async (id, token) => {
+        return await axios.get(
+            `https://takefoodvoucherservice.azurewebsites.net/GetVoucher?storeId=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    }
 }
