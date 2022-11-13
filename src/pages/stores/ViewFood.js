@@ -1,5 +1,5 @@
-import { Block, Edit } from '@mui/icons-material';
-import { Button, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Block, Cached, Edit } from '@mui/icons-material';
+import { Button, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import React from 'react'
 import { useState } from 'react';
@@ -40,10 +40,10 @@ const ViewFood = () => {
         navigate(`/store/food/updateFood/${id}`)
     }
 
-    const handleDelete = (id) => {
-        const deleteFood = async () => {
+    const handleChangeState = (id, state) => {
+        const updateStateFood = async () => {
             try {
-                const deletedFood = await storeServices.deleteFood(id, token)
+                const deletedFood = await storeServices.updateStateFood(id, state, token)
                 if (deletedFood) {
                     console.log("xoa dc roi")
                 }
@@ -52,8 +52,11 @@ const ViewFood = () => {
 
             }
         }
-        if (window.confirm("Món ăn này đã hết hàng?")) {
-            deleteFood(id, token)
+        var message = ''
+        if (state) message = "Món ăn này đã có hàng trở lại?"
+        else message = "Món ăn này đã hết hàng?"
+        if (window.confirm(message)) {
+            updateStateFood(id, state, token)
         } else return
     }
 
@@ -118,9 +121,24 @@ const ViewFood = () => {
                                                 >
                                                     <Edit sx={{ color: mainColor }} />
                                                 </IconButton>
-                                                <IconButton onClick={() => handleDelete(food.FoodId)}>
-                                                    <Block sx={{ color: '#E25B45' }} />
-                                                </IconButton>
+                                                {
+                                                    food.State === 'Còn hàng' ? (
+                                                        <Tooltip title='Chuyển sang hết hàng'>
+                                                            <IconButton onClick={() => handleChangeState(food.FoodId, false)}>
+                                                                <Block sx={{ color: '#E25B45' }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+
+                                                    ) :
+                                                        (
+                                                            <Tooltip title='Chuyển sang còn hàng'>
+                                                                <IconButton onClick={() => handleChangeState(food.FoodId, true)}>
+                                                                    <Cached sx={{ color: mainColor }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        )
+                                                }
+
                                             </TableCell>
                                         </TableRow>
                                     ))}

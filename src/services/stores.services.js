@@ -76,9 +76,9 @@ export const storeServices = {
             }
         )
     },
-    deleteFood: async (id, token) => {
+    updateStateFood: async (id, state, token) => {
         return await axios.delete(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food?id=${id}`,
+            `https://takefoodstoreservice.azurewebsites.net/api/Food/UpdateState?id=${id}&state=${state}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
