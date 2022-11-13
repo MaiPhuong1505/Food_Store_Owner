@@ -32,7 +32,6 @@ const CreateFood = () => {
 
     const getToppingSelected = (toppings) => {
         setToppingList(toppings)
-
     }
 
     const getCategory = (categoryId) => {
@@ -57,10 +56,10 @@ const CreateFood = () => {
         try {
             const food = await storeServices.createFood(storeId, info, token)
             if (food) {
-                navigate('store/food')
+                navigate('/store/food')
             }
         } catch (error) {
-
+            console.log(error)
         }
     }
 

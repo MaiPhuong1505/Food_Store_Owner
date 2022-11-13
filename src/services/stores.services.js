@@ -23,7 +23,7 @@ export const storeServices = {
             }
         )
     },
-    getCategories: async () => {
+    getStoreCategories: async () => {
         return await axios.get(
             'https://takefoodstoreservice.azurewebsites.net/api/Category/GetStoreCategory',
             {
@@ -32,6 +32,11 @@ export const storeServices = {
                     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
                 }
             })
+    },
+    getFoodCategories: async () => {
+        return await axios.get(
+            `https://takefoodstoreservice.azurewebsites.net/api/Category/GetFoodCategory`
+        )
     },
     getFood: async (id, token) => {
         return await axios.get(
@@ -77,7 +82,7 @@ export const storeServices = {
         )
     },
     updateStateFood: async (id, state, token) => {
-        return await axios.delete(
+        return await axios.put(
             `https://takefoodstoreservice.azurewebsites.net/api/Food/UpdateState?id=${id}&state=${state}`,
             {
                 headers: {
@@ -152,6 +157,16 @@ export const storeServices = {
     getVouchers: async (id, token) => {
         return await axios.get(
             `https://takefoodvoucherservice.azurewebsites.net/GetVoucher?storeId=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getMonthRevenue: async (id, month, year, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Revenue/Revenue?storeID=${id}&month=${month}&year=${year}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

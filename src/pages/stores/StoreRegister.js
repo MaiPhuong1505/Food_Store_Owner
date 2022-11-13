@@ -41,9 +41,9 @@ const StoreRegister = () => {
 
 
   useEffect(() => {
-    async function getCategories() {
+    async function getStoreCategories() {
       const categories = []
-      await storeServices.getCategories()
+      await storeServices.getStoreCategories()
         .then((res) => {
           res.data.map((category) => {
             categories[category.categoryId] = category.name
@@ -54,7 +54,7 @@ const StoreRegister = () => {
           console.log("Error", error)
         })
     }
-    getCategories()
+    getStoreCategories()
   }, [])
 
   //pass data from child components

@@ -13,14 +13,14 @@ const CategorySelect = ({ getData, categoryId }) => {
   const [selectedCategory, setSelectedCategory] = useState(categoryId)
   const [categoryList, setCategoryList] = useState([])
 
-  const getCategories = async () => {
-    const response = await storeServices.getCategories()
+  const getFoodCategories = async () => {
+    const response = await storeServices.getFoodCategories()
     if (response.data) {
       setCategoryList(response.data)
     }
   }
   useEffect(() => {
-    getCategories()
+    getFoodCategories()
   }, [])
 
   const handleChange = (event) => {

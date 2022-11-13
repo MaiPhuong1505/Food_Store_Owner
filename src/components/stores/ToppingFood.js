@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { storeServices } from '../../services/stores.services'
 
-const ToppingFood = ({ getData, toppingIds }) => {
+const ToppingFood = ({ getData, toppingIds = [] }) => {
     const [toppingList, setToppingList] = useState([])
     const [selectedChange, setSelectedChange] = useState(toppingIds)
 
@@ -30,13 +30,16 @@ const ToppingFood = ({ getData, toppingIds }) => {
         setSelectedChange(newValue)
         getData(newValue)
     }
+    console.log("selected change include", selectedChange)
 
     return (
+
         <Box sx={{ display: 'flex', border: '1px solid #89D5C9' }}>
             <FormControl component="fieldset" variant="standard">
                 <FormGroup>
                     {toppingList.length > 0 &&
-                        toppingList.map((topping) => (
+                        toppingList.map((topping) =>
+                        (
                             <FormControlLabel key={topping.ID}
                                 sx={{ m: 0 }}
                                 control={
@@ -46,7 +49,8 @@ const ToppingFood = ({ getData, toppingIds }) => {
                                 }
                                 label={topping.Name}
                             />
-                        ))
+                        )
+                        )
                     }
                 </FormGroup>
             </FormControl>
