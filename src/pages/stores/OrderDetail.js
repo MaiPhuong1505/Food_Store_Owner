@@ -35,17 +35,11 @@ const OrderDetail = () => {
 
     useEffect(() => {
         getOrderDetail(id, token)
-        console.log("detail:", detail)
+
     }, [])
-
+    console.log("detail:", detail)
     const mainColor = '#89D5C9'
-    // function createData(stt, food, price, quantity, subtotal) {
-    //     return { stt, food, price, quantity, subtotal };
-    // }
 
-    // const rows = [
-    //     createData(1, 'Trà sữa truyền thống', 25000, 1, 25000),
-    // ]
     return (
         <>
             <Stack
@@ -119,20 +113,36 @@ const OrderDetail = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            <TableRow
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell align="center">1</TableCell>
-                                                <TableCell align="center">Trà sữa truyền thống</TableCell>
-                                                <TableCell align="center">25000đ</TableCell>
-                                                <TableCell align="center">1</TableCell>
-                                                <TableCell align="center">25000đ</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell align="center" colSpan={4} >Trân châu đen</TableCell>
-                                                <TableCell align="center" >5000đ</TableCell>
-                                            </TableRow>
-                                            {/* bảng riêng */}
+                                            {detail.ListFood.map((food, stt = 0) => (
+                                                <>
+                                                    <TableRow
+                                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                    >
+                                                        <TableCell align="center">{++stt}</TableCell>
+                                                        <TableCell align="center">{food.FoodName}</TableCell>
+                                                        <TableCell align="center">
+                                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                                .format(food.Price)}
+                                                        </TableCell>
+                                                        <TableCell align="center">{food.Quantity}</TableCell>
+                                                        <TableCell align="center">
+                                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                                .format(food.Price * food.Quantity)}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    {food.ListTopping.map((topping) => (
+                                                        <TableRow>
+                                                            <TableCell align="center" colSpan={3} >{topping.ToppingName}</TableCell>
+                                                            <TableCell align="center" >{topping.Quantity}</TableCell>
+                                                            <TableCell align="center" >
+                                                                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                                    .format(topping.Price)}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+
+                                                </>
+                                            ))}
 
                                         </TableBody>
                                     </Table>

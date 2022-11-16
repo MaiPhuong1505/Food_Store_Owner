@@ -107,7 +107,10 @@ const ViewOrders = () => {
                                         <TableCell align="center">{order.nameUser}</TableCell>
                                         <TableCell align="center">{order.address}</TableCell>
                                         <TableCell align="center">{order.sdt}</TableCell>
-                                        <TableCell align="center">{order.totalPrice} đ</TableCell>
+                                        <TableCell align="center">
+                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
+                                                .format(order.totalPrice)}
+                                        </TableCell>
                                         <TableCell align="center">
                                             {new Intl.DateTimeFormat('vi-VN', {
                                                 hour: 'numeric',
