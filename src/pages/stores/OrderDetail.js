@@ -37,7 +37,7 @@ const OrderDetail = () => {
         getOrderDetail(id, token)
 
     }, [])
-    console.log("detail:", detail)
+
     const mainColor = '#89D5C9'
 
     return (
@@ -125,16 +125,16 @@ const OrderDetail = () => {
                                                                 .format(food.Price)}
                                                         </TableCell>
                                                         <TableCell align="center">{food.Quantity}</TableCell>
-                                                        <TableCell align="center">
+                                                        <TableCell align="right">
                                                             {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
                                                                 .format(food.Price * food.Quantity)}
                                                         </TableCell>
                                                     </TableRow>
                                                     {food.ListTopping.map((topping) => (
-                                                        <TableRow>
+                                                        <TableRow sx={{ fontSize: 'smaller' }}>
                                                             <TableCell align="center" colSpan={3} >{topping.ToppingName}</TableCell>
                                                             <TableCell align="center" >{topping.Quantity}</TableCell>
-                                                            <TableCell align="center" >
+                                                            <TableCell align="right" >
                                                                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
                                                                     .format(topping.Price)}
                                                             </TableCell>
