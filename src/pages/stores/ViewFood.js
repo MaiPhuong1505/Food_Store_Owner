@@ -104,8 +104,11 @@ const ViewFood = () => {
                                             <TableCell align="center">{++i}</TableCell>
                                             <TableCell align="center">{food.Name}</TableCell>
                                             <TableCell align="left">{food.Dscription}</TableCell>
-                                            <TableCell align="center">
-                                                <img src={food.UrlImage} style={{ height: 100, width: 100, overflow: 'hidden' }} />
+                                            <TableCell align="center" >
+                                                <div style={{ height: 100, width: 100, overflow: 'hidden' }}>
+                                                    <img src={food.UrlImage} style={{ height: '100%', width: 'auto' }} />
+                                                </div>
+
                                             </TableCell>
                                             <TableCell align="center">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(food.Price)}</TableCell>
                                             <TableCell align="center">{food.Category}</TableCell>

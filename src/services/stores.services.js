@@ -72,7 +72,7 @@ export const storeServices = {
     },
     updateFood: async (id, data, token) => {
         return await axios.put(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food?FoodID=${id}`,
+            `https://takefoodstoreservice.azurewebsites.net/api/Food/UpdateFood?FoodID=${id}`,
             data,
             {
                 headers: {
@@ -167,6 +167,26 @@ export const storeServices = {
     getMonthRevenue: async (id, month, year, token) => {
         return await axios.get(
             `https://takefood-orderservice.azurewebsites.net/api/Revenue/Revenue?storeID=${id}&month=${month}&year=${year}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getBestSellingFood: async (id, month, year, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Revenue/BestSellingFood?storeID=${id}&month=${month}&year=${year}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getMonthOrders: async (id, startDate, endDate, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Order/GetOrderByDate?StoreID=${id}&dateStart=${startDate}&endStart=${endDate}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

@@ -132,7 +132,9 @@ const OrderDetail = () => {
                                                     </TableRow>
                                                     {food.ListTopping.map((topping) => (
                                                         <TableRow sx={{ fontSize: 'smaller' }}>
-                                                            <TableCell align="center" colSpan={3} >{topping.ToppingName}</TableCell>
+                                                            <TableCell></TableCell>
+                                                            <TableCell align="center">{topping.ToppingName}</TableCell>
+                                                            <TableCell></TableCell>
                                                             <TableCell align="center" >{topping.Quantity}</TableCell>
                                                             <TableCell align="right" >
                                                                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })

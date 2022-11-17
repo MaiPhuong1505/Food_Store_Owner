@@ -60,7 +60,7 @@ const ViewVouchers = () => {
                                             <TableCell align="center">Voucher</TableCell>
                                             <TableCell align="center">Mô tả</TableCell>
                                             <TableCell align="center">Điều kiện tối thiểu</TableCell>
-                                            <TableCell align="center">Mức giảm</TableCell>
+                                            <TableCell align="center">Mức giảm (%)</TableCell>
                                             {/* <TableCell align="center">Đơn vị</TableCell> */}
                                             <TableCell align="center">Mức giảm tối đa</TableCell>
                                             <TableCell align="center">Mã</TableCell>
@@ -77,13 +77,41 @@ const ViewVouchers = () => {
                                                 <TableCell align="center">{++stt}</TableCell>
                                                 <TableCell align="center">{voucher.name}</TableCell>
                                                 <TableCell align="left">{voucher.description}</TableCell>
-                                                <TableCell align="center">{voucher.minSpend}đ</TableCell>
+                                                <TableCell align="center">
+                                                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(voucher.minSpend)}
+                                                </TableCell>
                                                 <TableCell align="center">{voucher.amount}</TableCell>
                                                 {/* <TableCell align="center">{voucher.type}</TableCell> */}
-                                                <TableCell align="center">{voucher.maxDiscount}</TableCell>
+                                                <TableCell align="center">
+                                                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(voucher.maxDiscount)}
+                                                </TableCell>
                                                 <TableCell align="center">{voucher.code}</TableCell>
-                                                <TableCell align="center">{voucher.startDate}</TableCell>
-                                                <TableCell align="center">{voucher.endDate}</TableCell>
+                                                <TableCell align="center">
+                                                    {
+                                                        new Intl.DateTimeFormat('vi-VN', {
+                                                            hour: 'numeric',
+                                                            minute: 'numeric',
+                                                            hour12: false,
+                                                            month: 'numeric',
+                                                            day: 'numeric',
+                                                            weekday: 'long',
+                                                            year: 'numeric',
+                                                            timeZone: 'Asia/Ho_Chi_Minh',
+                                                        }).format(Date.parse(voucher.startDate))
+                                                    }
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    {new Intl.DateTimeFormat('vi-VN', {
+                                                        hour: 'numeric',
+                                                        minute: 'numeric',
+                                                        hour12: false,
+                                                        month: 'numeric',
+                                                        day: 'numeric',
+                                                        weekday: 'long',
+                                                        year: 'numeric',
+                                                        timeZone: 'Asia/Ho_Chi_Minh',
+                                                    }).format(Date.parse(voucher.endDate))}
+                                                </TableCell>
 
                                                 <TableCell align="center">
                                                     <IconButton
