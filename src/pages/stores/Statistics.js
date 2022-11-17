@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ExampleChart from '../../../src/assets/images/exampleChart.png'
+import Chart from '../../components/stores/Chart'
 import MonthBestSeller from '../../components/stores/MonthBestSeller'
 import MonthOrders from '../../components/stores/MonthOrders'
 import MonthRevenue from '../../components/stores/MonthRevenue'
@@ -24,13 +25,7 @@ const Statistics = () => {
                     <MonthOrders storeId={storeId} token={token} />
                 </Grid>
                 <Grid item xs={7}>
-                    <Box display={'flex'}
-                        flexDirection={'column'}
-                        justifyContent={'center'}
-                        sx={{ backgroundColor: 'white', boxShadow: '0px 0px 3px grey' }}>
-                        <Typography sx={{ marginTop: 1, textAlign: 'center', fontWeight: 'bold' }}>Thống kê doanh thu cả năm</Typography>
-                        <img src={ExampleChart} style={{ margin: 10 }} alt='chart' />
-                    </Box>
+                    <Chart storeId={storeId} token={token} />
                 </Grid>
                 <Grid item xs={5}>
                     <MonthBestSeller storeId={storeId} token={token} />

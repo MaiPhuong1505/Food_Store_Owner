@@ -193,5 +193,15 @@ export const storeServices = {
                 }
             }
         )
-    }
+    },
+    getRevenueOfYear: async (id, year, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Revenue/RevenueOfYear?storeID=${id}&year=${year}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
 }
