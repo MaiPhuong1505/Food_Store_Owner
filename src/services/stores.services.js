@@ -154,6 +154,17 @@ export const storeServices = {
             }
         )
     },
+    updateOrderStatus: async (id, status, token) => {
+        return await axios.put(
+            `https://takefood-orderservice.azurewebsites.net/api/Order?status=${status}&idOrder=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    }
+    ,
     getVouchers: async (id, token) => {
         return await axios.get(
             `https://takefoodvoucherservice.azurewebsites.net/GetVoucher?storeId=${id}`,

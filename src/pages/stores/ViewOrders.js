@@ -21,7 +21,6 @@ const ViewOrders = () => {
         try {
             const orders = await storeServices.getOrders(id, token)
             if (orders.data) {
-                console.log("orders", orders.data)
                 setOrders(orders.data)
             }
         } catch (error) {

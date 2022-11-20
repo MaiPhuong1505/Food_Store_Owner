@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import DefaultLayout from '../../components/Layout/DefaultLayout'
 import Header from '../../components/Layout/DefaultLayout/Header/Header'
+import NewOrder from '../../components/stores/NewOrder'
 import PendingStatus from '../../components/stores/PendingStatus'
 import { storeServices } from '../../services/stores.services'
 
@@ -94,10 +95,7 @@ const Store = () => {
                     <Typography>
                       Cửa hàng đang có <span style={{ color: mainColor, fontWeight: 'bold' }}>{storeInfo.QuantityOfFood}</span> món ăn
                     </Typography>
-                    <Typography>
-                      Cửa hàng đang có 1 đơn hàng chưa được xử lý
-                      <Link to="/store/" style={{ color: mainColor, marginLeft: 20 }}>Xem ngay</Link>
-                    </Typography>
+                    <NewOrder />
                   </Stack>
                 </Box>
               </DefaultLayout>

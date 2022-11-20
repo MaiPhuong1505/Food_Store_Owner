@@ -32,7 +32,7 @@ const Chart = ({ storeId, token }) => {
 
   const c = {
     series: [{
-      name: 'Doanh thu cả năm',
+      name: 'Doanh thu',
       data: revenueList
     },],
     options: {

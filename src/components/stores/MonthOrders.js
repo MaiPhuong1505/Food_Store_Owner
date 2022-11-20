@@ -27,9 +27,6 @@ const MonthOrders = ({ storeId, token }) => {
     const token = localStorage.getItem("AccessToken")
     const startDate = moment().startOf('month').utc(true).format()
     const endDate = moment().endOf('month').utc(true).format()
-
-    console.log(startDate)
-
     getMonthOrders(storeId, startDate, endDate, token)
   }, [])
 
