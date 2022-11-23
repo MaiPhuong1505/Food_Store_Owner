@@ -134,7 +134,7 @@ export const storeServices = {
             }
         )
     },
-    getOrders: async (id, token) => {
+    getAllOrders: async (id, token) => {
         return await axios.get(
             `https://takefood-orderservice.azurewebsites.net/api/Order/GetAllOrder?storeID=${id}`,
             {
@@ -147,6 +147,26 @@ export const storeServices = {
     getOrderDetail: async (id, token) => {
         return await axios.get(
             `https://takefood-orderservice.azurewebsites.net/api/Order/GetOrderDetails?OrderID=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getOrdersByStatus: async (id, status, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Order/GetAllOrderByStatus?storeID=${id}&status=${status}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getPagingOrders: async (id, start, end, pageNum, size, query, sortBy, sortType, status, token) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Order/GetPagingOrder?StartDate=${start}&EndDate=${end}&PageNumber=${pageNum}&PageSize=${size}&QueryString=${query}&SortBy=${sortBy}&SortType=${sortType}&storeID=${id}&status=${status}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
