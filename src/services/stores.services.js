@@ -195,6 +195,17 @@ export const storeServices = {
             }
         )
     },
+    createVoucher: async (data, token) => {
+        return await axios.post(
+            `https://takefoodvoucherservice.azurewebsites.net/AddVoucher`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
     getMonthRevenue: async (id, month, year, token) => {
         return await axios.get(
             `https://takefood-orderservice.azurewebsites.net/api/Revenue/Revenue?storeID=${id}&month=${month}&year=${year}`,

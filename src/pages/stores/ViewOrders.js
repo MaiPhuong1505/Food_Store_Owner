@@ -45,6 +45,7 @@ const ViewOrders = () => {
 
   const getOrders = async (id, start, end, pageNum, size, query, sortBy, sortType, status, token) => {
     try {
+      setLoading(true)
       if (!status) {
         status = 'all'
       }
@@ -122,22 +123,31 @@ const ViewOrders = () => {
           </FormControl>
         </Box>
         <Divider />
-        {isLoading ? <CircularProgress /> :
-          <TableContainer component={Paper}>
 
-            <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper}>
 
-              <TableHead sx={{ borderBottom: '2px solid black' }}>
+          <Table size="small" sx={{ minWidth: 650 }} aria-label="simple table">
+
+            <TableHead sx={{ borderBottom: '2px solid black' }}>
+              <TableRow>
+                <TableCell align="center">STT</TableCell>
+                <TableCell align="center">Tên</TableCell>
+                <TableCell align="center">Địa chỉ</TableCell>
+                <TableCell align="center">SĐT</TableCell>
+                <TableCell align="center">Thành tiền</TableCell>
+                <TableCell align="center">Ngày đặt hàng</TableCell>
+                <TableCell align="center">Trạng thái</TableCell>
+              </TableRow>
+            </TableHead>
+            {isLoading ?
+              <TableBody>
                 <TableRow>
-                  <TableCell align="center">STT</TableCell>
-                  <TableCell align="center">Tên</TableCell>
-                  <TableCell align="center">Địa chỉ</TableCell>
-                  <TableCell align="center">SĐT</TableCell>
-                  <TableCell align="center">Thành tiền</TableCell>
-                  <TableCell align="center">Ngày đặt hàng</TableCell>
-                  <TableCell align="center">Trạng thái</TableCell>
+                  <TableCell colSpan={7} align="center" sx={{ borderBottom: 'none' }}>
+                    <CircularProgress />
+                  </TableCell>
                 </TableRow>
-              </TableHead>
+              </TableBody>
+              :
               <TableBody>
                 {orders.map((order, stt) => (
                   <TableRow
@@ -175,30 +185,31 @@ const ViewOrders = () => {
                   </TableRow>
                 ))}
               </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    style={{ border: 'none' }}
-                    rowsPerPageOptions={[10]}
-                    count={total}
-                    colSpan={7}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: {
-                        'aria-label': 'rows per page',
-                      },
-                      native: true,
-                    }}
-                    onPageChange={handleChangePage}
-                  // onRowsPerPageChange={handleChangeRowsPerPage}
-                  // ActionsComponent={TablePaginationActions}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
-        }
+            }
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  style={{ border: 'none' }}
+                  rowsPerPageOptions={[10]}
+                  count={total}
+                  colSpan={7}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                // onRowsPerPageChange={handleChangeRowsPerPage}
+                // ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+
 
       </Stack>
     </>
