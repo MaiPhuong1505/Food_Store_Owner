@@ -27,7 +27,7 @@ const UploadImage = ({ OwnerID, fileName, getData, height, width = '100%', selec
 
   const uploadFile = (img) => {
     if (img == null) return;
-    if (fileName == '') { fileName = img.name }
+    if (fileName != img.name || fileName == '') { fileName = img.name }
     const imageRef = ref(storage, `${OwnerID}/${OwnerID} - ${fileName}`);
     uploadBytes(imageRef, img).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {

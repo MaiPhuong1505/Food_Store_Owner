@@ -25,6 +25,7 @@ import Reviews from './pages/stores/Reviews';
 import ViewVouchers from './pages/stores/ViewVouchers';
 import CreateVoucher from './pages/stores/CreateVoucher';
 import Statistics from './pages/stores/Statistics';
+import UpdateVoucher from './pages/stores/UpdateVoucher';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           <Route path='/store/reviews' element={<DefaultLayout><Reviews /></DefaultLayout>}></Route>
           <Route exact='true' path='/store/vouchers' element={<DefaultLayout><ViewVouchers /></DefaultLayout>}></Route>
           <Route path='/store/vouchers/createVoucher' element={<DefaultLayout><CreateVoucher /></DefaultLayout>}></Route>
+          <Route path='/store/vouchers/updateVoucher/:id' element={<DefaultLayout><UpdateVoucher /></DefaultLayout>}></Route>
           <Route path='/store/statistics' element={<DefaultLayout><Statistics /></DefaultLayout>}></Route>
           {/* <Route path='/store/food/updateFood/' element={<DefaultLayout><CreateFood/></DefaultLayout>}></Route> */}
 

@@ -185,9 +185,9 @@ export const storeServices = {
         )
     }
     ,
-    getVouchers: async (id, token) => {
+    getStoreVouchers: async (id, start, end, pageNum, size, query, queryType, sortBy, sortType, token) => {
         return await axios.get(
-            `https://takefoodvoucherservice.azurewebsites.net/GetVoucher?storeId=${id}`,
+            `https://takefoodvoucherservice.azurewebsites.net/GetPagingStoreVoucher?PageNumber=${pageNum}&PageSize=${size}&StartDate=${start}&EndDate=${end}&QueryType=${queryType}&QueryString=${query}&SortBy=${sortBy}&SortType=${sortType}&storeID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -199,6 +199,37 @@ export const storeServices = {
         return await axios.post(
             `https://takefoodvoucherservice.azurewebsites.net/AddVoucher`,
             data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    getVoucherById: async (id, token) => {
+        return await axios.get(
+            `https://takefoodvoucherservice.azurewebsites.net/GetVoucherByID?ID=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    updateVoucher: async (data, token) => {
+        return await axios.put(
+            `https://takefoodvoucherservice.azurewebsites.net/UpdateVoucher`,
+            data,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    },
+    deleteVoucher: async (id, token) => {
+        return await axios.delete(
+            `https://takefoodvoucherservice.azurewebsites.net/DeleteVoucher?voucherId=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

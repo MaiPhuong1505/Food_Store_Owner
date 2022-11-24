@@ -20,7 +20,6 @@ const CreateVoucher = () => {
     const [startDay, setStartDay] = useState(moment())
     const [expireDay, setExpireDay] = useState(moment())
 
-
     const handleSubmit = async () => {
         let info = {
             name, description, minSpend, amount, maxDiscount, code,
