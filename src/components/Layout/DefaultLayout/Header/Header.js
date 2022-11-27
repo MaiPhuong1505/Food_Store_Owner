@@ -6,7 +6,8 @@ import {
     Link,
     useNavigate
 } from "react-router-dom";
-import { Button, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 
 
 function Header() {
@@ -30,7 +31,24 @@ function Header() {
         navigate("/")
     }
     return (
-        <header>
+        // <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="fixed"
+            sx={{ flexDirection: 'inherit', background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+            {/* <Toolbar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                >
+                    <Menu />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    News
+                </Typography>
+                <Button color="inherit">Login</Button>
+            </Toolbar> */}
             <div className='container'>
                 <img src={LogoOrange} style={{ width: 60 }} alt="Logo" />
                 <Link exact="true" to="/"><span className='brand'>Foorder</span></Link>
@@ -67,10 +85,24 @@ function Header() {
 
                 </ul>
             </nav>
-            {isLogin ? <><Typography>{userName}</Typography> <Button onClick={logout}>Đăng xuất</Button></> : <Link to="/login">Đăng nhập</Link>}
+            {isLogin ?
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography color='black'>{userName}</Typography>
+                    <Button style={{ marginLeft: 10 }} onClick={logout}>Đăng xuất</Button></div>
+                : <Link to="/login">Đăng nhập</Link>}
+
+        </AppBar>
+        // </Box>
+        // <header>
+
+        //     <div className='container'>
+        //         <img src={LogoOrange} style={{ width: 60 }} alt="Logo" />
+        //         <Link exact="true" to="/"><span className='brand'>Foorder</span></Link>
+        //     </div>
 
 
-        </header>
+
+        // </header>
     );
 }
 

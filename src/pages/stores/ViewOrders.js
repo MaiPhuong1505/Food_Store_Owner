@@ -34,7 +34,7 @@ const ViewOrders = () => {
     pageNumber = newPage + 1
     pageSize = rowsPerPage
     setPage(newPage)
-    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'sortBy', 'sortType', stateOrder, token)
+    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'createDate', 'Desc', stateOrder, token)
   }
 
   // const handleChangeRowsPerPage = (event) => {
@@ -65,7 +65,7 @@ const ViewOrders = () => {
   }
 
   useEffect(() => {
-    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'sortBy', 'sortType', state, token)
+    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'createDate', 'Desc', state, token)
   }, [state])
 
   const orderStatus = [
@@ -79,7 +79,7 @@ const ViewOrders = () => {
     setLoading(true)
     state = event.target.value
     setStateOrder(state)
-    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'sortBy', 'sortType', state, token)
+    getOrders(storeId, startDate, endDate, pageNumber, pageSize, '0', 'createDate', 'Desc', state, token)
     // getOrders(storeId, state, token)
   }
 
