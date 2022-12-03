@@ -66,7 +66,8 @@ const Topping = () => {
                 <TableBody>
                   {toppingList.length > 0 && toppingList.map((topping, stt) => (
                     <ToppingItem topping={topping} key={stt} stt={stt} />
-                  ))}
+                  )
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>

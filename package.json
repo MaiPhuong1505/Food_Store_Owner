@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@microsoft/signalr": "^7.0.0",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
     "@mui/styled-engine-sc": "^5.10.6",
@@ -27,6 +28,7 @@
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
     "react-select": "^5.5.7",
+    "react-signalr": "^0.2.14",
     "redux": "^4.2.0",
     "sass": "^1.55.0",
     "styled-components": "^5.3.6",

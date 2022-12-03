@@ -10,27 +10,32 @@ import { storeServices } from '../../services/stores.services';
 const ViewFood = () => {
     const [foodList, setFoodList] = useState([])
     const [isLoading, setLoading] = useState(true)
+    const [stateArr, setStateArr] = useState([])
 
     const mainColor = '#89D5C9'
     const token = localStorage.getItem("AccessToken")
     const storeId = localStorage.getItem("StoreId")
 
     let navigate = useNavigate()
+    var foodState = []
+
     useEffect(() => {
         async function getFood(storeId, token) {
             try {
                 const foodData = await storeServices.getFood(storeId, token)
                 if (foodData) {
                     setFoodList(foodData.data)
+                    foodData.data.map((food) => foodState = [...foodState, food.State])
+                    setStateArr(foodState)
                 }
             } catch (error) {
-                console.log(error.response.data)
+                console.log(error.response)
             } finally {
                 setLoading(false)
             }
         }
         getFood(storeId, token)
-    }, [])
+    }, [foodState])
 
     //button them mon moi
     const createClick = () => {
@@ -40,12 +45,20 @@ const ViewFood = () => {
         navigate(`/store/food/updateFood/${id}`)
     }
 
-    const handleChangeState = (id, state) => {
+    const handleChangeState = (id, state, index) => {
         const updateStateFood = async () => {
             try {
-                const deletedFood = await storeServices.updateStateFood(id, state, token)
-                if (deletedFood) {
-                    console.log("xoa dc roi")
+                const updatedFood = await storeServices.updateStateFood(id, state, token)
+                if (updatedFood) {
+                    console.log("xoa dc roi", index)
+                    let stateMsg = ''
+                    if (state) stateMsg = 'Còn hàng'
+                    else stateMsg = 'Hết hàng'
+                    foodState = stateArr
+                    foodState[index] = stateMsg
+                    // foodState.at(index) = stateMsg
+                    setStateArr(foodState)
+                    console.log('setStateArr', foodState)
                 }
             } catch (error) {
                 console.log(error)
@@ -101,7 +114,7 @@ const ViewFood = () => {
                                             key={food.FoodId}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell align="center">{++i}</TableCell>
+                                            <TableCell align="center">{i + 1}</TableCell>
                                             <TableCell align="center">{food.Name}</TableCell>
                                             <TableCell align="left">{food.Dscription}</TableCell>
                                             <TableCell align="center" >
@@ -117,7 +130,7 @@ const ViewFood = () => {
                                                     topping.name
                                                 ).join(', ')}
                                             </TableCell>
-                                            <TableCell align="center">{food.State}</TableCell>
+                                            <TableCell align="center">{stateArr[i]}</TableCell>
                                             <TableCell align="center">
                                                 <IconButton
                                                     onClick={() => editClick(food.FoodId)}
@@ -125,9 +138,9 @@ const ViewFood = () => {
                                                     <Edit sx={{ color: mainColor }} />
                                                 </IconButton>
                                                 {
-                                                    food.State === 'Còn hàng' ? (
+                                                    stateArr[i] === 'Còn hàng' ? (
                                                         <Tooltip title='Chuyển sang hết hàng'>
-                                                            <IconButton onClick={() => handleChangeState(food.FoodId, false)}>
+                                                            <IconButton onClick={() => handleChangeState(food.FoodId, false, i)}>
                                                                 <Block sx={{ color: '#E25B45' }} />
                                                             </IconButton>
                                                         </Tooltip>
@@ -135,7 +148,7 @@ const ViewFood = () => {
                                                     ) :
                                                         (
                                                             <Tooltip title='Chuyển sang còn hàng'>
-                                                                <IconButton onClick={() => handleChangeState(food.FoodId, true)}>
+                                                                <IconButton onClick={() => handleChangeState(food.FoodId, true, i)}>
                                                                     <Cached sx={{ color: mainColor }} />
                                                                 </IconButton>
                                                             </Tooltip>

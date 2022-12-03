@@ -8,7 +8,7 @@ import PasswordIcon from '@mui/icons-material/Password';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { authService } from '../../services/auth.services';
-import { useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 const Login = () => {
     let navigate = useNavigate()
@@ -18,7 +18,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const [phoneNumber, setPhone] = useState("")
-    
+
     async function handleLogin() {
         if (isSignup) {
             let account = {
@@ -27,7 +27,7 @@ const Login = () => {
             // console.log(account)
             try {
                 const signup = await authService.register(account)
-                if (signup){
+                if (signup) {
                     setIsSignup(!isSignup)
                     setPassword("")
                 }
@@ -50,10 +50,10 @@ const Login = () => {
                     var role = localStorage.getItem("Roles")
                     if (role.includes("Owner")) {
                         navigate("/store")
-                    } else if (!role.includes("Owner") && role.includes("User")){
+                    } else if (!role.includes("Owner") && role.includes("User")) {
                         navigate("/storeRegister")
-                    }               
-                    
+                    }
+
                 }
             } catch (error) {
                 console.log(error.response.data)
@@ -140,18 +140,21 @@ const Login = () => {
                                 {isSignup ? "ĐĂNG KÝ" : "ĐĂNG NHẬP"}
                             </Button>
                             <div>
+                                {!isSignup && <NavLink to='/forgotPassword' style={{ color: 'lightgrey', fontSize: '0.8rem' }}>Quên mật khẩu?</NavLink>}
+                            </div>
+                            <div>
                                 {isSignup ? "Đã có tài khoản?" : "Chưa có tài khoản?"}
 
                                 <Button
                                     onClick={() => setIsSignup(!isSignup)}
                                     sx={{
-                                        fontStyle: "semi-bold",
                                         color: "#89D5C9"
                                     }}
                                 >
                                     {isSignup ? "Đăng nhập" : "Đăng ký"}
                                 </Button>
                             </div>
+
                         </Box>
                     </form>
                 </div>

@@ -26,22 +26,24 @@ import ViewVouchers from './pages/stores/ViewVouchers';
 import CreateVoucher from './pages/stores/CreateVoucher';
 import Statistics from './pages/stores/Statistics';
 import UpdateVoucher from './pages/stores/UpdateVoucher';
+import Notify from './Notify';
+import ForgotPassword from './pages/forgotPassword';
+import ChangePassword from './pages/forgotPassword/ChangePassword';
 
 
 function App() {
 
   return (
     <>
-      {/* <CreateFood/> */}
-      {/* <StoreRegister /> */}
-
+      <Notify />
       <BrowserRouter>
-
         <Routes>
           <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
           <Route path="/downloadLink" element={<><Header /><DownloadLink /></>}></Route>
           <Route path="/introduction" element={<><Header /><RegisterIntroduction /></>}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+          <Route path="/changePass" element={<ChangePassword />}></Route>
           <Route path='/store' element={<><Store /></>}></Route>
           <Route path='/storeRegister' element={<><Header /><StoreRegister /></>}></Route>
           <Route exact='true' path='/store/food' element={<DefaultLayout><ViewFood /></DefaultLayout>}></Route>
