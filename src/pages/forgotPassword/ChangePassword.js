@@ -1,12 +1,34 @@
 import React, { useState } from 'react'
 import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/material'
-
+import { authService } from '../../services/auth.services';
+import { NavLink, useNavigate } from "react-router-dom"
+import { createSearchParams, useSearchParams } from "react-router-dom";
 const ChangePassword = () => {
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams();
+  const email =  searchParams.get("email");
+  const token =  searchParams.get("token");
+  const [ok, setOk] = useState(false)
+  let navigate = useNavigate()
 
   const handleChangePass = () => {
+    if (ok) {
+      let acc = {
+        email, password, token
+      }
+      authService.renewPass(acc);
+      navigate("/login")
+    }
+  }
 
+  const setConfirmPassword = (pass) => {
+    if(password === pass){
+      setOk(true)
+    }else{
+      setOk(false)
+    }
+    setConfirmPass(pass)
   }
   return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
@@ -23,13 +45,15 @@ const ChangePassword = () => {
           fullWidth
           margin="normal" type={'password'}
           variant='outlined' placeholder='Nhập mật khẩu mới'
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => { setPassword(e.target.value); setConfirmPass("") }}
         ></TextField>
         <TextField
           fullWidth
           margin="normal" type={'password'}
           variant='outlined' placeholder='Xác nhận mật khẩu'
-          onChange={(e) => setConfirmPass(e.target.value)}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          error={confirmPass != password}
+          helperText={confirmPass != password?'Không trùng với mật khẩu hiện tại':''}
         ></TextField>
         <Divider fullWidth sx={{ marginY: 2 }}></Divider>
 
