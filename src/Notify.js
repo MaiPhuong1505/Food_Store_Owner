@@ -1,7 +1,7 @@
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
-import { Alert, Snackbar } from '@mui/material'
+import { Alert, Button, Snackbar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 
 const Notify = () => {
@@ -10,7 +10,7 @@ const Notify = () => {
   const [orderId, setOrderId] = useState("")
   const [open, setOpen] = useState(false)
 
-
+  const navigate = useNavigate()
   const url = "https://takefood-orderservice.azurewebsites.net/notifysocket"
   const accessToken = localStorage.getItem("AccessToken")
 
@@ -48,17 +48,19 @@ const Notify = () => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  const handleClick = (id) => {
+    navigate(`/store/order/detail/${id}`)
+  }
   return (
-    // <NotifyAlert open={open} isClose={isClose} inputText={inputText} orderId={orderId} />
-
-
-    <Snackbar open={open} onClose={handleClose}>
+    <Snackbar open={open} onClose={handleClose} autoHideDuration={5000}>
       <Alert onClose={handleClose} variant='filled' severity="info" sx={{ width: '100%' }}
         action={
-          <NavLink to={`/store/order/detail/${orderId}`}></NavLink>
+          <Button color='inherit' size='small' onClick={() => handleClick(orderId)}>
+            Xem ngay
+          </Button>
         }>
-        {inputText} : Xem ngay
-
+        {inputText}
       </Alert>
     </Snackbar>
 

@@ -1,40 +1,83 @@
 import { Star, StarOutline } from '@mui/icons-material'
-import { Divider, Typography } from '@mui/material'
+import { CircularProgress, Divider, Pagination, Paper, Rating, Typography } from '@mui/material'
 import { Box, Stack } from '@mui/system'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { storeServices } from '../../services/stores.services'
 
 const Reviews = () => {
-    const orange = '#FF8357'
-  return (
-    <>
-    <Stack
-    sx={{
-        margin: 3,
-        backgroundColor: 'white',
-        boxShadow: '0px 0px 3px grey'
-    }}>
-        <Box padding={2}>
-            <Typography color={'grey'}>Mã đơn hàng: 4567</Typography>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Typography>Đồ ăn rất ngon</Typography>
-        </Box>
-        <Divider/>
-        <Box padding={2}>
-            <Typography color={'grey'}>Mã đơn hàng: 4567</Typography>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <Star sx={{color: orange}}/>
-            <StarOutline sx={{color: orange}}/>
-            <Typography>Đồ ăn rất ngon</Typography>
-        </Box>
-    </Stack>
-    </>
-  )
+    const token = localStorage.getItem("AccessToken")
+    const storeId = localStorage.getItem("StoreId")
+
+    const [reviews, setReviews] = useState([])
+    const [isLoading, setLoading] = useState(true)
+
+    var pageNumber = 1
+    var pageSize = 10
+
+    const [page, setPage] = useState(1)
+    const [rowsPerPage, setRowsPerPage] = useState(pageSize)
+    const [total, setTotal] = useState(0)
+
+    const getReviews = async (id, pageNum, size, token) => {
+        try {
+            const reviews = await storeServices.getReviews(id, pageNum, size, token)
+            if (reviews.data) {
+                setReviews(reviews.data.manageReviews)
+                setTotal(reviews.data.total)
+                setPage(reviews.data.pageIndex)
+                setRowsPerPage(reviews.data.pageSize)
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleChange = (event, newPage) => {
+        pageNumber = newPage
+        pageSize = rowsPerPage
+        setPage(newPage)
+        getReviews(storeId, pageNumber, pageSize, token)
+    }
+    useEffect(() => {
+        getReviews(storeId, pageNumber, pageSize, token)
+    }, [])
+
+    return (
+        <Stack sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography>Tổng số review: {total}</Typography>
+
+            {
+                isLoading ?
+                    <CircularProgress />
+                    :
+                    <>
+
+                        <Stack component={Paper} elevation={3}
+                            sx={{
+                                margin: 3
+                            }}>
+                            {
+                                reviews.map((review) => (
+                                    <>
+                                        <Box padding={2} key={review.orderID}>
+                                            <Typography color={'grey'}>Mã đơn hàng: {review.orderID}</Typography>
+                                            <Rating value={review.star} readOnly />
+                                            <Typography>{review.description}</Typography>
+                                        </Box>
+                                        <Divider />
+                                    </>
+                                ))
+                            }
+
+                        </Stack>
+
+                    </>
+            }
+            <Pagination count={Math.ceil(total / rowsPerPage)} page={page} onChange={handleChange} />
+        </Stack>
+    )
 }
 
 export default Reviews

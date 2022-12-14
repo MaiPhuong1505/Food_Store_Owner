@@ -35,8 +35,9 @@ function App() {
 
   return (
     <>
-      <Notify />
       <BrowserRouter>
+        <Notify />
+
         <Routes>
           <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
           <Route path="/downloadLink" element={<><Header /><DownloadLink /></>}></Route>

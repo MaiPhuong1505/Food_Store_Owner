@@ -3,7 +3,7 @@ import axios from 'axios'
 export const storeServices = {
     createStore: async (data, id, token) => {
         return await axios.post(
-            `https://takefoodstoreservice.azurewebsites.net/CreateStore?OwnerID=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/CreateStore?OwnerID=${id}`,
             data,
             {
                 headers: {
@@ -15,7 +15,7 @@ export const storeServices = {
 
     getStore: async (id, token) => {
         return await axios.get(
-            `https://takefoodstoreservice.azurewebsites.net/GetStoreByOwner?ownerID=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/GetStoreByOwner?ownerID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -25,7 +25,7 @@ export const storeServices = {
     },
     getStoreCategories: async () => {
         return await axios.get(
-            'https://takefoodstoreservice.azurewebsites.net/api/Category/GetStoreCategory',
+            'https://takefood-storeservice.azurewebsites.net/api/Category/GetStoreCategory',
             {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -35,12 +35,12 @@ export const storeServices = {
     },
     getFoodCategories: async () => {
         return await axios.get(
-            `https://takefoodstoreservice.azurewebsites.net/api/Category/GetFoodCategory`
+            `https://takefood-storeservice.azurewebsites.net/api/Category/GetFoodCategory`
         )
     },
     getFood: async (id, token) => {
         return await axios.get(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food/GetAllFoodByStore?StoreID=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Food/GetAllFoodByStore?StoreID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -50,7 +50,7 @@ export const storeServices = {
     },
     createFood: async (storeId, data, token) => {
         return await axios.post(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food/${storeId}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Food/${storeId}`,
             data,
             {
                 headers: {
@@ -62,7 +62,7 @@ export const storeServices = {
     ,
     getFoodById: async (id, token) => {
         return await axios.get(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food/GetFoodViewMobile?FoodID=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Food/GetFoodViewMobile?FoodID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -72,7 +72,7 @@ export const storeServices = {
     },
     updateFood: async (id, data, token) => {
         return await axios.put(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food/UpdateFood?FoodID=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Food/UpdateFood?FoodID=${id}`,
             data,
             {
                 headers: {
@@ -83,7 +83,7 @@ export const storeServices = {
     },
     updateStateFood: async (id, state, token) => {
         return await axios.put(
-            `https://takefoodstoreservice.azurewebsites.net/api/Food/UpdateState?id=${id}&state=${state}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Food/UpdateState?id=${id}&state=${state}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -94,7 +94,7 @@ export const storeServices = {
     ,
     getTopping: async (id, token) => {
         return await axios.get(
-            `https://takefoodstoreservice.azurewebsites.net/GetToppingActive/${id}`,
+            `https://takefood-storeservice.azurewebsites.net/GetToppingActive/${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -104,7 +104,7 @@ export const storeServices = {
     },
     createTopping: async (data, id, token) => {
         return await axios.post(
-            `https://takefoodstoreservice.azurewebsites.net/api/Topping/${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Topping/${id}`,
             data,
             {
                 headers: {
@@ -115,7 +115,7 @@ export const storeServices = {
     },
     updateTopping: async (id, data, token) => {
         return await axios.put(
-            `https://takefoodstoreservice.azurewebsites.net/api/Topping?id=${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Topping?id=${id}`,
             data,
             {
                 headers: {
@@ -126,7 +126,7 @@ export const storeServices = {
     },
     deleteTopping: async (id, token) => {
         return await axios.delete(
-            `https://takefoodstoreservice.azurewebsites.net/api/Topping/${id}`,
+            `https://takefood-storeservice.azurewebsites.net/api/Topping/${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -187,7 +187,7 @@ export const storeServices = {
     ,
     getStoreVouchers: async (id, start, end, pageNum, size, query, queryType, sortBy, sortType, token) => {
         return await axios.get(
-            `https://takefoodvoucherservice.azurewebsites.net/GetPagingStoreVoucher?PageNumber=${pageNum}&PageSize=${size}&StartDate=${start}&EndDate=${end}&QueryType=${queryType}&QueryString=${query}&SortBy=${sortBy}&SortType=${sortType}&storeID=${id}`,
+            `https://takefood-voucherservice.azurewebsites.net/GetPagingStoreVoucher?PageNumber=${pageNum}&PageSize=${size}&StartDate=${start}&EndDate=${end}&QueryType=${queryType}&QueryString=${query}&SortBy=${sortBy}&SortType=${sortType}&storeID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -197,7 +197,7 @@ export const storeServices = {
     },
     createVoucher: async (data, token) => {
         return await axios.post(
-            `https://takefoodvoucherservice.azurewebsites.net/AddVoucher`,
+            `https://takefood-voucherservice.azurewebsites.net/AddVoucher`,
             data,
             {
                 headers: {
@@ -208,7 +208,7 @@ export const storeServices = {
     },
     getVoucherById: async (id, token) => {
         return await axios.get(
-            `https://takefoodvoucherservice.azurewebsites.net/GetVoucherByID?ID=${id}`,
+            `https://takefood-voucherservice.azurewebsites.net/GetVoucherByID?ID=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -218,7 +218,7 @@ export const storeServices = {
     },
     updateVoucher: async (data, token) => {
         return await axios.put(
-            `https://takefoodvoucherservice.azurewebsites.net/UpdateVoucher`,
+            `https://takefood-voucherservice.azurewebsites.net/UpdateVoucher`,
             data,
             {
                 headers: {
@@ -229,7 +229,7 @@ export const storeServices = {
     },
     deleteVoucher: async (id, token) => {
         return await axios.delete(
-            `https://takefoodvoucherservice.azurewebsites.net/DeleteVoucher?voucherId=${id}`,
+            `https://takefood-voucherservice.azurewebsites.net/DeleteVoucher?voucherId=${id}`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -277,4 +277,14 @@ export const storeServices = {
             }
         )
     },
+    getReviews: async (id, pageNum, size, token) => {
+        return await axios.get(
+            `https://takefood-reviewservice.azurewebsites.net/GetPaging?PageNumber=${pageNum}&PageSize=${size}&storeID=${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        )
+    }
 }
