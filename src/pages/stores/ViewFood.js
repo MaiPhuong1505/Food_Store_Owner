@@ -50,7 +50,6 @@ const ViewFood = () => {
             try {
                 const updatedFood = await storeServices.updateStateFood(id, state, token)
                 if (updatedFood) {
-                    console.log("xoa dc roi", index)
                     let stateMsg = ''
                     if (state) stateMsg = 'Còn hàng'
                     else stateMsg = 'Hết hàng'

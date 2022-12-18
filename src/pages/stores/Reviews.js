@@ -45,7 +45,7 @@ const Reviews = () => {
     }, [])
 
     return (
-        <Stack sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Stack sx={{ margin: 3 }}>
             <Typography>Tổng số review: {total}</Typography>
 
             {
@@ -56,7 +56,7 @@ const Reviews = () => {
 
                         <Stack component={Paper} elevation={3}
                             sx={{
-                                margin: 3
+                                marginY: 3
                             }}>
                             {
                                 reviews.map((review) => (
@@ -64,6 +64,21 @@ const Reviews = () => {
                                         <Box padding={2} key={review.orderID}>
                                             <Typography color={'grey'}>Mã đơn hàng: {review.orderID}</Typography>
                                             <Rating value={review.star} readOnly />
+                                            {
+                                                review.imgs.length > 0 &&
+                                                (
+                                                    <Box>
+                                                        {review.imgs.map((img) => {
+                                                            return (
+                                                                <div style={{ height: 100, width: 100, overflow: 'hidden' }}>
+                                                                    <img src={img} style={{ height: '100%', width: 'auto' }} />
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </Box>
+                                                )
+                                            }
+
                                             <Typography>{review.description}</Typography>
                                         </Box>
                                         <Divider />
@@ -75,7 +90,8 @@ const Reviews = () => {
 
                     </>
             }
-            <Pagination count={Math.ceil(total / rowsPerPage)} page={page} onChange={handleChange} />
+            <Pagination count={Math.ceil(total / rowsPerPage)} page={page} onChange={handleChange}
+                sx={{ [`& .MuiPagination-ul`]: { justifyContent: 'center' } }} />
         </Stack>
     )
 }

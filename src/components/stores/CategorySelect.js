@@ -10,17 +10,19 @@ const CategorySelect = ({ getData, categoryId }) => {
   //   "Ăn vặt",
   //   "Cơm",
   // ]
+
+  const token = localStorage.getItem('AccessToken')
   const [selectedCategory, setSelectedCategory] = useState(categoryId)
   const [categoryList, setCategoryList] = useState([])
 
-  const getFoodCategories = async () => {
-    const response = await storeServices.getFoodCategories()
+  const getFoodCategories = async (token) => {
+    const response = await storeServices.getFoodCategories(token)
     if (response.data) {
       setCategoryList(response.data)
     }
   }
   useEffect(() => {
-    getFoodCategories()
+    getFoodCategories(token)
   }, [])
 
   const handleChange = (event) => {

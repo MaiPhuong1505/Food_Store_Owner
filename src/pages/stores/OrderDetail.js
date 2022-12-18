@@ -179,12 +179,12 @@ const OrderDetail = () => {
                             <TableCell align="center">{food.FoodName}</TableCell>
                             <TableCell align="center">
                               {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                                .format(food.Price)}
+                                .format(food.OriPrice)}
                             </TableCell>
                             <TableCell align="center">{food.Quantity}</TableCell>
                             <TableCell align="right">
                               {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
-                                .format(food.Price * food.Quantity)}
+                                .format(food.Price)}
                             </TableCell>
                           </TableRow>
                           {food.ListTopping.map((topping) => (
