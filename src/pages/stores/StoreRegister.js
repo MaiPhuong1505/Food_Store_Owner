@@ -100,7 +100,6 @@ const StoreRegister = () => {
   }
 
   async function handleSubmit(event) {
-    console.log(address)
     const info = {
       name: storeName,
       phone: storePhone,
@@ -131,7 +130,6 @@ const StoreRegister = () => {
     try {
       const store = await storeServices.createStore(info, ownerId, token)
       if (store) {
-        console.log("Oke roi do")
         navigate('/store')
       }
     } catch (error) {

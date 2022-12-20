@@ -21,9 +21,6 @@ const UploadImage = ({ OwnerID, fileName, getData, height, width = '100%', selec
 
   const [image, setImage] = useState({ name: "Hãy chọn file" })
   const [imageUrl, setImageUrl] = useState(selectedURL)
-  // if (image !== null){
-  //     console.log("Image: ", image.name)
-  // }
 
   const uploadFile = (img) => {
     if (img == null) return;

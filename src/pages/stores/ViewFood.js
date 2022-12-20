@@ -55,9 +55,7 @@ const ViewFood = () => {
                     else stateMsg = 'Hết hàng'
                     foodState = stateArr
                     foodState[index] = stateMsg
-                    // foodState.at(index) = stateMsg
                     setStateArr(foodState)
-                    console.log('setStateArr', foodState)
                 }
             } catch (error) {
                 console.log(error)

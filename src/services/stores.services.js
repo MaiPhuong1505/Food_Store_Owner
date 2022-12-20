@@ -89,6 +89,7 @@ export const storeServices = {
     updateStateFood: async (id, state, token) => {
         return await axios.put(
             `https://takefood-apigateway.azurewebsites.net/api/Food/UpdateState?id=${id}&state=${state}`,
+            {},
             {
                 headers: {
                     "Authorization": `Bearer ${token}`

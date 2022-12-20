@@ -30,7 +30,6 @@ const ToppingFood = ({ getData, toppingIds = [] }) => {
         setSelectedChange(newValue)
         getData(newValue)
     }
-    console.log("selected change include", selectedChange)
 
     return (
 

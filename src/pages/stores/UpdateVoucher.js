@@ -52,7 +52,6 @@ const UpdateVoucher = () => {
       expireDay: expireDay,
       startDay: startDay
     }
-    console.log("info", info)
     try {
       const response = await storeServices.updateVoucher(info, token)
       if (response) {

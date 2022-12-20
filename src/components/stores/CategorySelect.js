@@ -26,7 +26,6 @@ const CategorySelect = ({ getData, categoryId }) => {
   }, [])
 
   const handleChange = (event) => {
-    console.log("target:", event.target)
     setSelectedCategory(event.target.value)
     getData(event.target.value)
   };

@@ -7,14 +7,12 @@ import {
     useNavigate
 } from "react-router-dom";
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { Menu } from '@mui/icons-material';
+import { LocationOn, Menu } from '@mui/icons-material';
 
 
 function Header() {
     let activeStyle = {
         color: "#FF8357",
-        paddingBottom: '15px',
-        borderBottom: 'solid 5px #FF8357'
     };
     let navigate = useNavigate()
     // const [isLogin, setIsLogin] = useState(false)
@@ -55,7 +53,10 @@ function Header() {
             </div>
             <nav>
                 <ul className="nav__links">
-                    <li>TP. Đà Nẵng</li>
+                    <li>
+                        <LocationOn />TP. Đà Nẵng
+                        <Typography></Typography>
+                    </li>
                     <li>
                         <NavLink to="/downloadLink" style={({ isActive }) =>
                             isActive ? activeStyle : undefined

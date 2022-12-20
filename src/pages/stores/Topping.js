@@ -13,7 +13,6 @@ const Topping = () => {
   const [toppingList, setToppingList] = useState([])
   const [isLoading, setLoading] = useState(true)
 
-  // console.log("toppingList", toppingList)
   const openClick = () => {
     setOpenCreateBox(!openCreateBox)
   }
@@ -32,17 +31,35 @@ const Topping = () => {
       setLoading(false)
     }
   }
+  const getDeletedTopping = (toppingId) => {
+    // let newList = toppingList
+    setToppingList(prev => [...prev].filter(topping =>
+      topping.ID !== toppingId
+    ))
+  }
+  const handleDelete = (toppingId, token) => {
+    async function deleteTopping(toppingId, token) {
+      try {
+        const d = await storeServices.deleteTopping(toppingId, token)
+        if (d) {
+          getDeletedTopping(toppingId)
+        }
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    }
+
+    if (window.confirm("Bạn chắc chắn muốn xoá topping này?")) {
+      deleteTopping(toppingId, token)
+    } else return
+  }
 
   useEffect(() => {
     getTopping(storeId, token)
-    // console.log("topping list", toppingList)
   }, [])
-
 
   return (
     <Stack
-      // alignItems="flex-end"
-
       sx={{
         paddingY: 3,
         paddingX: '10vw',
@@ -64,9 +81,9 @@ const Topping = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {toppingList.length > 0 && toppingList.map((topping, stt) => (
-                    <ToppingItem topping={topping} key={stt} stt={stt} />
-                  )
+                  {toppingList.length > 0 && toppingList.map((topping, stt) => {
+                    return <ToppingItem topping={topping} key={stt} stt={stt} deleteFunc={handleDelete} />
+                  }
                   )}
                 </TableBody>
               </Table>
@@ -85,7 +102,9 @@ const Topping = () => {
           </>
         )
       }
+
     </Stack>
+
   )
 }
 

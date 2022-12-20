@@ -3,7 +3,7 @@ import Select from 'react-select'
 import React from 'react'
 import useLocation from './useLocation'
 
-const Location = ({props, getLocationData}) => {
+const Location = ({ props, getLocationData }) => {
     const {
         state,
         onCitySelect,
@@ -19,7 +19,6 @@ const Location = ({props, getLocationData}) => {
         selectedWard
     } = state;
 
-    // console.log(selectedCity.label, selectedDistrict.label, selectedWard.label)
     return (
         <>
             <Grid container direction="row"
@@ -28,12 +27,12 @@ const Location = ({props, getLocationData}) => {
                 <Grid item>
                     <FormControl margin='dense' size="small">
                         <Select
-                            onChange={(option) => 
-                                {onCitySelect(option)
+                            onChange={(option) => {
+                                onCitySelect(option)
                                 getLocationData({
                                     city: option.label
                                 })
-                                }}
+                            }}
                             label="Tỉnh/Thành phố"
                             placeholder='Tỉnh/Thành phố'
                             options={cityOptions}
@@ -62,12 +61,14 @@ const Location = ({props, getLocationData}) => {
                 <Grid item>
                     <FormControl margin='dense' size="small">
                         <Select
-                            onChange={(option) => {onWardSelect(option)
+                            onChange={(option) => {
+                                onWardSelect(option)
                                 getLocationData({
                                     city: state.selectedCity.label,
                                     district: state.selectedDistrict.label,
                                     ward: option.label
-                                })}}
+                                })
+                            }}
                             placeholder="Xã/Phường/Thị trấn"
                             options={wardOptions}
                             defaultValue={selectedWard}

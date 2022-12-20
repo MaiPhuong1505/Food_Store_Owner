@@ -1,39 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IconButton, TableCell, TableRow, TextField, } from '@mui/material';
 import { Close, Delete, Edit, Save } from '@mui/icons-material';
 import { storeServices } from '../../services/stores.services';
 
-const ToppingItem = ({ topping, stt }) => {
+const ToppingItem = ({ topping, stt, deleteFunc }) => {
 
   const token = localStorage.getItem("AccessToken")
 
   const [openEdit, setOpenEdit] = useState(false)
   const [editTopping, setEditTopping] = useState(topping)
 
+  // const handleDelete = () => {
+  //   async function deleteTopping(toppingId, token) {
+  //     try {
+  //       const d = await storeServices.deleteTopping(toppingId, token)
+  //       if (d) {
+  //         getData(toppingId)
+  //       }
+  //     } catch (error) {
+  //       console.log(error.response.data)
+  //     }
+  //   }
+
+  //   if (window.confirm("Bạn chắc chắn muốn xoá topping này?")) {
+  //     deleteTopping(topping.ID, token)
+  //   } else return
+  // }
+
   const handleDelete = () => {
-    async function deleteTopping(toppingId, token) {
-      try {
-        const d = await storeServices.deleteTopping(toppingId, token)
-        if (d) {
-          console.log("xoa dc roi")
-        }
-      } catch (error) {
-        console.log(error.response.data)
-      }
-    }
-
-    if (window.confirm("Bạn chắc chắn muốn xoá topping này?")) {
-      deleteTopping(topping.ID, token)
-    } else return
+    deleteFunc(topping.ID, token)
   }
-
   const handleEdit = () => {
-    console.log("click ne")
     setOpenEdit(!openEdit)
   }
   const handleChange = (e) => {
     const { name, value } = e.target
-    console.log("name value", name, value)
     setEditTopping({
       ...editTopping,
       [name]: value
@@ -51,9 +52,15 @@ const ToppingItem = ({ topping, stt }) => {
     }
     setOpenEdit(false)
   }
+  useEffect(() => {
+    setEditTopping(topping)
+  }, [topping])
 
   const mainColor = '#89D5C9'
 
+  if (!topping) {
+    return null
+  }
   return (
     <TableRow
       key={editTopping.ID}

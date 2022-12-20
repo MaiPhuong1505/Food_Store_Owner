@@ -24,7 +24,6 @@ const Login = () => {
             let account = {
                 name, email, password, phoneNumber
             }
-            // console.log(account)
             try {
                 const signup = await authService.register(account)
                 if (signup) {
@@ -42,7 +41,6 @@ const Login = () => {
             try {
                 const login = await authService.login(account);
                 if (login.data) {
-                    console.log("Login data: ", login.data)
                     localStorage.setItem("UserId", login.data.id)
                     localStorage.setItem("AccessToken", login.data.accessToken)
                     localStorage.setItem("Name", login.data.name)

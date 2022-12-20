@@ -17,6 +17,7 @@ const OrderDetail = () => {
     { eng: 'Processing', viet: 'Đã xác nhận' },
     { eng: 'Delivering', viet: 'Đang giao hàng' },
     { eng: 'Delivered', viet: 'Đã giao hàng' },
+    { eng: 'Canceled', viet: 'Đã huỷ' },
   ]
 
   const nextStatus = (status) => {
@@ -31,6 +32,8 @@ const OrderDetail = () => {
       case 'Delivering':
         text = 'Delivered'
         break;
+      default:
+        break;
     }
     return text
   }
@@ -39,6 +42,7 @@ const OrderDetail = () => {
   const [updateStatus, setUpdateStatus] = useState('')
   const [isLoading, setLoading] = useState(true)
   const [isOpen, setOpen] = useState(false)
+  const [isFinished, setFinished] = useState(false)
 
   const getOrderDetail = async (orderId, token) => {
     try {
@@ -46,6 +50,9 @@ const OrderDetail = () => {
       if (orderDetail.data) {
         setDetail(orderDetail.data)
         setUpdateStatus(orderDetail.data.Status)
+        if (orderDetail.data.Status === 'Canceled') {
+          setFinished(true)
+        }
       }
     } catch (error) {
       console.error(error);
@@ -73,6 +80,9 @@ const OrderDetail = () => {
         if (response) {
           setUpdateStatus(nextStatus)
           setOpen(true)
+          if (nextStatus === 'Delivered') {
+            setFinished(true)
+          }
         }
       } catch (error) {
         console.error(error);
@@ -129,14 +139,16 @@ const OrderDetail = () => {
                     Mã đơn hàng: {detail.OrderID}
                   </Typography>
                 </div>
-                {updateStatus !== 'Delivered' ?
+                {!isFinished ?
                   <Button variant='contained' sx={{ backgroundColor: 'white', color: mainColor }}
                     onClick={() => handleChangeStatus(nextStatus(updateStatus))}>
-                    Chuyển trạng thái thành {orderStatus.find(x => x.eng === nextStatus(updateStatus)).viet}
+                    Chuyển trạng thái thành {orderStatus.find(x => x.eng === nextStatus(updateStatus))?.viet}
                   </Button>
                   :
                   <Paper elevation={2} sx={{ display: 'flex', paddingX: '1em' }}>
-                    <Typography variant="button" sx={{ alignSelf: 'center', color: mainColor }}>Đơn hàng đã hoàn thành</Typography>
+                    <Typography variant="button" sx={{ alignSelf: 'center', color: mainColor }}>
+                      Đơn hàng {orderStatus.find(x => x.eng === detail.Status)?.viet}
+                    </Typography>
                   </Paper>
                 }
 

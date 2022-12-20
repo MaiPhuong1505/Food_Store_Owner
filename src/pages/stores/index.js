@@ -19,7 +19,6 @@ const Store = () => {
       try {
         const store = await storeServices.getStore(userId, token)
         if (store.data) {
-          console.log(store.data)
           setStoreInfo(store.data)
           if (store.data.State === 'Active') {
             setIsAccepted(true)

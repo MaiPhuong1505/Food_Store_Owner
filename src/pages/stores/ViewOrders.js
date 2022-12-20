@@ -73,6 +73,7 @@ const ViewOrders = () => {
     { eng: 'Processing', viet: 'Đã xác nhận' },
     { eng: 'Delivering', viet: 'Đang giao hàng' },
     { eng: 'Delivered', viet: 'Đã giao hàng' },
+    { eng: 'Canceled', viet: 'Đã huỷ' },
   ]
 
   const handleChange = (event) => {
