@@ -27,5 +27,5 @@ const theme = createTheme({
     },
 });
 
-
+export const palette = theme.palette;
 export default theme;

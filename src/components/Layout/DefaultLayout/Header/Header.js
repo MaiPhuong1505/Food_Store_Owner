@@ -1,18 +1,19 @@
 import LogoOrange from '../../../../assets/images/LogoOrange.png'
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../../css/header.css'
 import {
     NavLink,
     Link,
     useNavigate
 } from "react-router-dom";
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { LocationOn, Menu } from '@mui/icons-material';
+import { AppBar, Button, Typography } from '@mui/material';
+import { Download, Group, LocationOn, Storefront } from '@mui/icons-material';
+import { secondColor } from '../../../../consts';
 
 
 function Header() {
     let activeStyle = {
-        color: "#FF8357",
+        color: secondColor,
     };
     let navigate = useNavigate()
     // const [isLogin, setIsLogin] = useState(false)
@@ -54,14 +55,13 @@ function Header() {
             <nav>
                 <ul className="nav__links">
                     <li>
-                        <LocationOn />TP. Đà Nẵng
-                        <Typography></Typography>
+                        <LocationOn sx={{ color: secondColor }} />TP. Đà Nẵng
                     </li>
                     <li>
                         <NavLink to="/downloadLink" style={({ isActive }) =>
                             isActive ? activeStyle : undefined
                         }>
-                            Đặt đồ ăn ngay
+                            <Download sx={{ color: secondColor }} /> Đặt đồ ăn ngay
                         </NavLink>
                     </li>
                     {isLogin ?
@@ -70,7 +70,7 @@ function Header() {
                                 style={({ isActive }) =>
                                     isActive ? activeStyle : undefined
                                 }
-                            >Cửa hàng của bạn
+                            > <Storefront sx={{ color: secondColor }} /> Cửa hàng của bạn
                             </NavLink>
                         </li>
                         :
@@ -79,7 +79,7 @@ function Header() {
                                 style={({ isActive }) =>
                                     isActive ? activeStyle : undefined
                                 }
-                            >Đăng ký bán hàng
+                            > <Group sx={{ color: secondColor }} /> Đăng ký bán hàng
                             </NavLink>
                         </li>
                     }
@@ -90,7 +90,7 @@ function Header() {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Typography color='black'>{userName}</Typography>
                     <Button style={{ marginLeft: 10 }} onClick={logout}>Đăng xuất</Button></div>
-                : <Link to="/login">Đăng nhập</Link>}
+                : <Link to="/login" className='login-button'>Đăng nhập</Link>}
 
         </AppBar>
         // </Box>

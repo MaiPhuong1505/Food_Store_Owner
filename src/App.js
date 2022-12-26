@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import Login from './pages/login';
 import Header from './components/Layout/DefaultLayout/Header/Header';
@@ -6,8 +5,6 @@ import {
   BrowserRouter,
   Route,
   Routes,
-  Navigate,
-  // Link
 } from "react-router-dom";
 import Home from './pages/Home';
 import DownloadLink from './pages/DownloadLink';
@@ -29,6 +26,7 @@ import UpdateVoucher from './pages/stores/UpdateVoucher';
 import Notify from './Notify';
 import ForgotPassword from './pages/forgotPassword';
 import ChangePassword from './pages/forgotPassword/ChangePassword';
+import HeaderOnlyLayout from './components/Layout/HeaderOnlyLayout';
 
 
 function App() {
@@ -39,7 +37,7 @@ function App() {
         <Notify />
 
         <Routes>
-          <Route exact="true" path="/" element={<><Header /><Home /></>}></Route>
+          <Route exact="true" path="/" element={<><HeaderOnlyLayout><Home /></HeaderOnlyLayout></>}></Route>
           <Route path="/downloadLink" element={<><Header /><DownloadLink /></>}></Route>
           <Route path="/introduction" element={<><Header /><RegisterIntroduction /></>}></Route>
           <Route path="/login" element={<Login />}></Route>

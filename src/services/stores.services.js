@@ -23,13 +23,12 @@ export const storeServices = {
             }
         )
     },
-    getStoreCategories: async () => {
+    getStoreCategories: async (token) => {
         return await axios.get(
             'https://takefood-apigateway.azurewebsites.net/api/Category/GetStoreCategory',
             {
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+                    "Authorization": `Bearer ${token}`
                 }
             })
     },
@@ -245,7 +244,7 @@ export const storeServices = {
     },
     getMonthRevenue: async (id, month, year, token) => {
         return await axios.get(
-            `https://takefood-apigateway.azurewebsites.net/api/Revenue/Revenue?storeID=${id}&month=${month}&year=${year}`,
+            `https://takefood-apigateway.azurewebsites.net/api/Revenue/Revenue?storeID=${id}&month=${month}&year=${year}&paymentMethod=All`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -275,7 +274,7 @@ export const storeServices = {
     },
     getRevenueOfYear: async (id, year, token) => {
         return await axios.get(
-            `https://takefood-apigateway.azurewebsites.net/api/Revenue/RevenueOfYear?storeID=${id}&year=${year}`,
+            `https://takefood-apigateway.azurewebsites.net/api/Revenue/RevenueOfYear?storeID=${id}&year=${year}&paymentMethod=All`,
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -292,6 +291,11 @@ export const storeServices = {
                 }
             }
         )
-    }
+    },
+    getStoreStatic: async (storeId, year, payment) => {
+        return await axios.get(
+            `https://takefood-orderservice.azurewebsites.net/api/Revenue/RevenueOfYear?storeID=${storeId}&year=${year}&paymentMethod=${payment}`
+        )
+    },
 }
 // https://takefood-apigateway.azurewebsites.net/GetPaging?StartDate=1&EndDate=1&PageNumber=1&PageSize=1&QueryString=1&SortBy=1&SortType=1&storeID=1

@@ -42,12 +42,18 @@ button {
 
 .nav__links {
     list-style: none;
-
+    display: flex;
 }
 
 .nav__links li {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     padding: 0px 20px;
+}
+
+.nav__links a {
+    display: flex;
+    align-items: center;
 }
 
 .nav__links li a {
@@ -56,14 +62,24 @@ button {
 }
 
 .nav__links li a:hover {
-    color: #0088a9;
+    color: #FF8357;
 }
 
-button {
+.login-button {
+    color: #89D5C9;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #89D5C9;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 25px;
+}
+
+/* button {
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
-}
+} */

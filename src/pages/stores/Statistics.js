@@ -1,6 +1,7 @@
 import { CircularProgress, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
+import AllPaymentStatistics from '../../components/stores/AllPaymentStatistics'
 import Chart from '../../components/stores/Chart'
 import MonthBestSeller from '../../components/stores/MonthBestSeller'
 import MonthOrders from '../../components/stores/MonthOrders'
@@ -33,7 +34,7 @@ const Statistics = () => {
                 <Grid item xs={5}>
                     <MonthBestSeller storeId={storeId} token={token} />
                 </Grid>
-                <Grid item xs={7} component={Paper} sx={{ margin: 2 }}>
+                {/* <Grid item xs={7} component={Paper} sx={{ margin: 2 }}>
                     <Typography variant='h6' sx={{ textAlign: 'center' }}>Chi tiết doanh thu</Typography>
                     <Stack sx={{ paddingLeft: 1, paddingRight: 3, paddingY: 3 }}>
                         <FormControl sx={{ alignSelf: 'flex-end' }} size='small'>
@@ -53,9 +54,9 @@ const Statistics = () => {
                         <Divider sx={{ marginY: 3 }} />
                         <PaymentStatistic payment={payment} />
                     </Stack>
-                </Grid>
-                <Grid item xs={5}>
-
+                </Grid> */}
+                <Grid item xs={12}>
+                    <AllPaymentStatistics />
                 </Grid>
             </Grid>
         </Box>
