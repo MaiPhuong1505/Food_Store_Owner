@@ -1,8 +1,10 @@
 import axios from "axios";
 import TokenService from "./token.services";
 
+export const BASE_URL = "https://takefood-apigateway.azurewebsites.net"
+
 const instance = axios.create({
-    baseURL: "https://takefood-apigateway-admin.azurewebsites.net",
+    baseURL: BASE_URL,
     headers: {
         "Content-Type": "application/json",
     },
@@ -13,7 +15,7 @@ instance.interceptors.request.use(
         const token = TokenService.getLocalAccessToken();
         if (token) {
             config.headers["Authorization"] = 'Bearer ' + token;  // for Spring Boot back-end
-        }            
+        }
         console.log(config);
         return config;
     },

@@ -5,11 +5,11 @@ import { Box, Stack } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { storeServices } from '../../services/stores.services';
 import { useState, useEffect } from 'react';
+import { mainColor } from '../../consts';
 
 const ViewVouchers = () => {
   const storeId = localStorage.getItem("StoreId")
   const token = localStorage.getItem("AccessToken")
-  const mainColor = '#89D5C9'
   const startDate = new Date(1990, 0, 1).toISOString()
   const endDate = new Date(2099, 11, 31).toISOString()
 
@@ -86,7 +86,7 @@ const ViewVouchers = () => {
         <Box
           display="flex"
           justifyContent={"flex-end"}>
-          <Button variant='contained' onClick={createClick}>
+          <Button variant='contained' onClick={createClick} sx={{ background: mainColor }}>
             Thêm voucher
           </Button>
         </Box>

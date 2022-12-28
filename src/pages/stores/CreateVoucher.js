@@ -5,12 +5,15 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import moment from 'moment/moment'
 import { storeServices } from '../../services/stores.services'
 import { useNavigate } from 'react-router-dom'
+import { mainColor } from '../../consts'
 
 const CreateVoucher = () => {
     const navigate = useNavigate()
 
     const storeId = localStorage.getItem("StoreId")
     const token = localStorage.getItem("AccessToken")
+
+    const [notifyText, setNotifyText] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [minSpend, setMinSpend] = useState(0)
@@ -21,6 +24,14 @@ const CreateVoucher = () => {
     const [expireDay, setExpireDay] = useState(moment())
 
     const handleSubmit = async () => {
+        if (amount > 100) {
+            setNotifyText('Mức giảm không được vượt quá 100%')
+            return
+        }
+        if (maxDiscount > Number.MAX_SAFE_INTEGER || minSpend > Number.MAX_SAFE_INTEGER) {
+            setNotifyText('Số tiền quá lớn')
+            return
+        }
         let info = {
             name, description, minSpend, amount, maxDiscount, code,
             startDay: new Date(startDay).toISOString(),
@@ -104,6 +115,7 @@ const CreateVoucher = () => {
                             variant="standard"
                             placeholder='Nhập giá trị đơn hàng tối thiểu'
                             onChange={(e) => setMinSpend(e.target.value)}
+
                         >
                         </TextField>
                     </Grid>
@@ -202,6 +214,7 @@ const CreateVoucher = () => {
                         </LocalizationProvider>
                     </Grid>
                 </Grid>
+                <Typography color='error'>{notifyText}</Typography>
             </Box>
             <Box
                 sx={{
@@ -210,8 +223,8 @@ const CreateVoucher = () => {
                     justifyContent: 'space-evenly',
                     marginBottom: 3
                 }}>
-                <Button variant='contained' onClick={handleSubmit}>Lưu</Button>
-                <Button variant='outlined'>Thoát</Button>
+                <Button variant='contained' onClick={handleSubmit} sx={{ background: mainColor }}>Lưu</Button>
+                <Button variant='outlined' sx={{ color: mainColor }}>Thoát</Button>
             </Box>
         </>
     )

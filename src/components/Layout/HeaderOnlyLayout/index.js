@@ -1,20 +1,19 @@
-import { Box } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import React from 'react'
 import Header from '../DefaultLayout/Header/Header'
 
 const HeaderOnlyLayout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
-      <Header />
-      {children}
-      {/* <Grid container>
+      <Grid container>
         <Grid item xs={12}>
-          
+          <Header />
+
         </Grid>
-        <Grid>
+        <Grid item xs={12}>
           {children}
         </Grid>
-      </Grid> */}
+      </Grid>
     </Box>
   )
 }

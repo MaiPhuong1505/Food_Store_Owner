@@ -38,7 +38,7 @@ function App() {
 
         <Routes>
           <Route exact="true" path="/" element={<><HeaderOnlyLayout><Home /></HeaderOnlyLayout></>}></Route>
-          <Route path="/downloadLink" element={<><Header /><DownloadLink /></>}></Route>
+          <Route path="/downloadLink" element={<><HeaderOnlyLayout><DownloadLink /></HeaderOnlyLayout></>}></Route>
           <Route path="/introduction" element={<><Header /><RegisterIntroduction /></>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>

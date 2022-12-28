@@ -1,16 +1,16 @@
-body{
+body {
     background-color: #F9F9FB;
     color: #4D4D4D;
 }
 
-#heading{
+#heading {
     display: flex;
     align-items: center;
     justify-content: center;
-    color : #89D5C9;
+    color: #89D5C9;
 }
 
-.splitdiv{
+.splitdiv {
     max-width: 170vh;
     max-height: 60vh;
     margin: auto;
@@ -20,11 +20,11 @@ body{
     box-shadow: 0px 0px 5px 3px gainsboro;
 }
 
-.leftsplit{
+.leftsplit {
     width: 45%;
     float: left;
-    background-image: url("../../assets/images/ImgLogin.PNG");
-    background-repeat: no-repeat; 
+    background-image: url("../assets/images/ImgLogin.PNG");
+    background-repeat: no-repeat;
     background-position: center;
     display: flex;
     align-items: flex-start;
@@ -32,7 +32,7 @@ body{
     border-bottom-left-radius: 20px;
 }
 
-.rightsplit{
+.rightsplit {
     background-color: white;
     width: 55%;
     float: right;

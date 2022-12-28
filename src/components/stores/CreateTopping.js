@@ -2,6 +2,7 @@ import { Save } from '@mui/icons-material';
 import { TextField, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react'
+import { mainColor } from '../../consts';
 import { storeServices } from '../../services/stores.services';
 
 const CreateTopping = () => {
@@ -49,7 +50,7 @@ const CreateTopping = () => {
                                 onChange={(e) => setPrice(e.target.value)} />
                         </TableCell>
                         <TableCell align="center">
-                            <Button variant="outlined" endIcon={<Save />} onClick={handleSubmit}>
+                            <Button variant="outlined" endIcon={<Save />} onClick={handleSubmit} sx={{ color: mainColor }}>
                                 Lưu
                             </Button>
                         </TableCell>

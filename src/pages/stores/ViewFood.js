@@ -5,6 +5,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { mainColor } from '../../consts';
 import { storeServices } from '../../services/stores.services';
 
 const ViewFood = () => {
@@ -12,7 +13,6 @@ const ViewFood = () => {
     const [isLoading, setLoading] = useState(true)
     const [stateArr, setStateArr] = useState([])
 
-    const mainColor = '#89D5C9'
     const token = localStorage.getItem("AccessToken")
     const storeId = localStorage.getItem("StoreId")
 
@@ -86,7 +86,7 @@ const ViewFood = () => {
                             <Typography>
                                 Tổng số món ăn: <span style={{ color: mainColor }}>{foodList.length}</span>
                             </Typography>
-                            <Button variant='contained' onClick={createClick}>
+                            <Button variant='contained' onClick={createClick} sx={{ background: mainColor }}>
                                 Thêm món
                             </Button>
                         </Box>

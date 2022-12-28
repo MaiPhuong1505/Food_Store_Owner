@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { storeServices } from '../../services/stores.services';
 import ToppingItem from '../../components/stores/ToppingItem';
 import CircularProgress from '@mui/material/CircularProgress';
+import { mainColor } from '../../consts';
 
 
 const Topping = () => {
@@ -95,7 +96,7 @@ const Topping = () => {
               <Button
                 variant='contained' size="large"
                 onClick={openClick}
-                sx={{ width: 'fit-content', marginTop: 2 }}>
+                sx={{ width: 'fit-content', marginTop: 2, background: mainColor }}>
                 {openCreateBox ? "Thoát" : "Thêm topping"}
               </Button>
             </div>

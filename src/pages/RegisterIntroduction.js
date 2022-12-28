@@ -1,6 +1,6 @@
+import { Box, Button } from '@mui/material'
 import React from 'react'
-import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom'
-import Store from './stores'
+import registerIntro from '../assets/images/registerIntroduction.png'
 
 const RegisterIntroduction = () => {
   // const user = localStorage.getItem("user")
@@ -9,15 +9,24 @@ const RegisterIntroduction = () => {
   //   auth = true
   // }
   return (
-    <div>
-      Đăng ký cửa hàng dễ dàng <br/>
-      <a href='/store'>Ngay tại đây</a>
-      {/* <BrowserRouter>
-      <Routes>
-        <Route path="/store" element={auth? <Store/> : <Navigate to="/login" replace={true}/>}></Route>
-      </Routes>
-      </BrowserRouter> */}
-    </div>
+    <Box sx={{ height: '100vh', width: '100vw', background: 'white', top: 0 }}>
+      <Box display='flex' justifyContent='center'>
+        <img src={registerIntro} style={{ marginTop: '15vh', width: '70vw', position: 'absolute', zIndex: 1 }} />
+        <Button
+          sx={{
+            marginTop: '26vh',
+            position: 'absolute', zIndex: 2,
+            paddingX: 6,
+            background: '#89D5C9',
+            fontSize: '1.5rem',
+            color: 'white',
+            borderRadius: '25px',
+          }}>
+          ĐĂNG KÝ NGAY
+        </Button>
+      </Box>
+
+    </Box>
   )
 }
 

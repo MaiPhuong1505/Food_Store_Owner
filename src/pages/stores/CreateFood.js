@@ -10,6 +10,7 @@ import CategorySelect from '../../components/stores/CategorySelect';
 import { storeServices } from '../../services/stores.services'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { mainColor } from '../../consts';
 
 const CreateFood = () => {
     const ownerId = localStorage.getItem("UserId")
@@ -180,8 +181,8 @@ const CreateFood = () => {
                     justifyContent: 'space-evenly',
                     marginBottom: 3
                 }}>
-                <Button variant='contained' onClick={handleSubmit}>Lưu</Button>
-                <Button variant='outlined'>Thoát</Button>
+                <Button variant='contained' onClick={handleSubmit} sx={{ background: mainColor }}>Lưu</Button>
+                <Button variant='outlined' sx={{ color: mainColor }}>Thoát</Button>
             </Box>
         </>
     )

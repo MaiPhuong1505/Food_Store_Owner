@@ -7,8 +7,8 @@ const ForgotPassword = () => {
   let navigate = useNavigate()
   const handleSendEmail = () => {
     authService.forgetPass(email);
-    alert("Vui lòng kiểm tra Email đã đăng ký để có hướng dân tiếp theo");
-    navigate("/login")
+    alert("Vui lòng kiểm tra Email đã đăng ký để có hướng dẫn tiếp theo");
+    // navigate("/login")
   }
   return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>

@@ -1,44 +1,45 @@
-import { Box, Button, Container, Divider, Grid, ListItemText, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, Container, Divider, Grid, ListItemText, MenuItem, Select, Snackbar, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Location from '../../components/location';
 import PendingStatus from '../../components/stores/PendingStatus'
-import Dropzone from 'react-dropzone';
 import theme from '../../theme';
 import UploadImage from '../../components/stores/UploadImage';
 import { storeServices } from '../../services/stores.services';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
 const StoreRegister = () => {
   const ownerId = localStorage.getItem("UserId")
   const token = localStorage.getItem("AccessToken")
+
+  const [open, setOpen] = useState(false)
   const [helperText, setHelperText] = useState('')
+  const [categoriesId, setCategoriesId] = useState([])
+  const [info, setInfo] = useState({
+    name: '',
+    phone: '',
+    TaxID: '',
+    nameOwner: '',
+    cmnd: '',
+    nameSTKOwner: '',
+    STK: '',
+    NameBank: '',
+    BankBranch: ''
+  })
+  const navigate = useNavigate()
 
-  let navigate = useNavigate()
-
-  const [storeName, setStoreName] = useState('')
-  const [storePhone, setStorePhone] = useState('')
   const [address, setAddress] = useState({})
   const [street, setStreet] = useState('')
   const [urlStoreImage, setUrlStoreImage] = useState('')
   const [urlKitchenImage, setUrlKitchenImage] = useState('')
   const [urlMenuImage, setUrlMenuImage] = useState('')
-  const [nameOwner, setNameOwner] = useState('')
-  const [cmnd, setCmnd] = useState('')
   const [urlFontCmndImage, setUrlFontCmndImage] = useState('')
   const [urlBackCmndImage, setUrlBackCmndImage] = useState('')
   const [urlLicenseImage, setUrlLicenseImage] = useState('')
-  const [nameSTKOwner, setNameSTKOwner] = useState('')
-  const [stk, setStk] = useState('')
-  const [nameBank, setNameBank] = useState('')
-  const [bankBranch, setBankBranch] = useState('')
-  const [taxID, setTaxID] = useState('')
   const [category, setCategory] = useState([])
   const [categoryList, setCategoryList] = useState([])
 
   const [isPending, setIsPending] = useState(false)
-
 
   useEffect(() => {
     async function getStoreCategories(token) {
@@ -79,8 +80,7 @@ const StoreRegister = () => {
   const getLicenseImage = (file) => {
     setUrlLicenseImage(file)
   }
-  const [categoriesId, setCategoriesId] = useState([])
-  const handleChange = (event, key) => {
+  const handleSelectChange = (event, key) => {
     const {
       target: { value },
     } = event;
@@ -91,32 +91,23 @@ const StoreRegister = () => {
     setCategoriesId([{ CategoryID: key.key.slice(2) }])
   };
 
-  const notifyText = (textField) => {
-    if (!textField) {
-      setHelperText('Hãy nhập thông tin')
-    } else {
-      setHelperText('')
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    if (value) {
+      setInfo({ ...info, [name]: value })
     }
   }
 
   async function handleSubmit(event) {
-    const info = {
-      name: storeName,
-      phone: storePhone,
+    const submitInfo = {
+      ...info,
       urlStoreImage: urlStoreImage,
       urlKitchenImage: urlKitchenImage,
       urlMenuImage: urlMenuImage,
-      nameOwner: nameOwner,
-      cmnd: cmnd,
       urlFontCmndImage: urlFontCmndImage,
       urlBackCmndImage: urlBackCmndImage,
       urlLicenseImage: urlLicenseImage,
-      nameSTKOwner: nameSTKOwner,
-      STK: stk,
-      NameBank: nameBank,
-      BankBranch: bankBranch,
-      TaxID: taxID,
-      Categories: categoriesId,
+      Categories: ['a'],
       address: {
         Province: address['city'],
         District: address['district'],
@@ -126,16 +117,28 @@ const StoreRegister = () => {
         Stress: street
       }
     }
-    console.log(info)
+    console.log(submitInfo)
+
+    Object.values(submitInfo).forEach(value => {
+      if (!value) {
+        setOpen(true)
+        return
+      }
+    })
+    Object.values(submitInfo.address).forEach(value => {
+      if (!value) {
+        setOpen(true)
+        return
+      }
+    })
     try {
-      const store = await storeServices.createStore(info, ownerId, token)
+      const store = await storeServices.createStore(submitInfo, ownerId, token)
       if (store) {
         navigate('/store')
       }
     } catch (error) {
       console.log(error.response.data)
     }
-
   }
   return (
     <div>
@@ -146,7 +149,8 @@ const StoreRegister = () => {
           flexDirection={'column'}
           paddingY={4}
           paddingX={7}
-          marginY={3}
+          marginTop={10}
+          marginBottom={4}
           marginX={13}
           sx={{ backgroundColor: 'white' }}
         >
@@ -159,12 +163,12 @@ const StoreRegister = () => {
             Tên cửa hàng <span style={{ color: "#E25B45" }}>*</span>
           </Typography>
           <TextField
-            fullWidth required
+            fullWidth
+            name="name"
             size='small' margin="dense" type={'text'}
-            onChange={(e) => setStoreName(e.target.value)}
-            error={helperText}
+            onChange={handleInputChange}
+            error={Boolean(helperText)}
             helperText={helperText}
-            onBlur={() => notifyText(storeName)}
           >
           </TextField>
           <Typography mt={2}>
@@ -172,8 +176,11 @@ const StoreRegister = () => {
           </Typography>
           <TextField
             fullWidth
-            size='small' margin="dense" type={'text'}
-            onChange={(e) => setStorePhone(e.target.value)}
+            size='small' margin="dense" type='number'
+            name='phone'
+            onChange={handleInputChange}
+            error={Boolean(helperText)}
+            helperText={helperText}
           >
           </TextField>
           <Typography mt={2}>
@@ -183,7 +190,7 @@ const StoreRegister = () => {
             size='small'
             multiple
             value={category}
-            onChange={handleChange}
+            onChange={handleSelectChange}
             renderValue={(selected) => selected.join(', ')}
           >
             {Object.entries(categoryList).map(([key, value]) => (
@@ -198,8 +205,9 @@ const StoreRegister = () => {
           </Typography>
           <TextField
             fullWidth
-            size='small' margin="dense" type={'text'}
-            onChange={(e) => setTaxID(e.target.value)}
+            size='small' margin="dense" type='number'
+            name='TaxID'
+            onChange={handleInputChange}
           >
           </TextField>
           <Typography mt={2}>
@@ -213,9 +221,9 @@ const StoreRegister = () => {
             size='small' margin="dense" type={'text'}
             placeholder="Số nhà, đường"
             onChange={(e) => setStreet(e.target.value)}
-            error={helperText}
+            error={Boolean(helperText)}
             helperText={helperText}
-            onBlur={() => notifyText(street)}
+          // onBlur={() => notifyText(street)}
           >
           </TextField>
           <Divider sx={{ marginY: 2 }} />
@@ -259,17 +267,20 @@ const StoreRegister = () => {
               <TextField
                 size='small' fullWidth margin="dense" type={'text'}
                 placeholder='Tên chủ sở hữu'
-                onChange={(e) => setNameOwner(e.target.value)}
-                error={helperText}
+                name='nameOwner'
+                onChange={handleInputChange}
+                error={Boolean(helperText)}
                 helperText={helperText}
-                onBlur={() => notifyText(nameOwner)}>
+              // onBlur={() => notifyText(nameOwner)}
+              >
               </TextField>
             </Grid>
             <Grid item xs={6}>
               <TextField
-                size='small' fullWidth margin="dense" type={'text'}
+                size='small' fullWidth margin="dense" type='number'
                 placeholder='Số CMND/CCCD'
-                onChange={(e) => setCmnd(e.target.value)}>
+                name='cmnd'
+                onChange={handleInputChange}>
               </TextField>
             </Grid>
             <Grid item xs={6}>
@@ -300,8 +311,9 @@ const StoreRegister = () => {
                 Tên chủ tài khoản ngân hàng <span style={{ color: "#E25B45" }}>*</span> (viết hoa không dấu)
               </Typography>
               <TextField
-                size='small' fullWidth margin="dense" type={'text'}
-                onChange={(e) => setNameSTKOwner(e.target.value)}>
+                size='small' fullWidth margin="dense" type='text'
+                name='nameSTKOwner'
+                onChange={handleInputChange}>
               </TextField>
             </Grid>
             <Grid item xs={6}>
@@ -309,8 +321,9 @@ const StoreRegister = () => {
                 Số tài khoản <span style={{ color: "#E25B45" }}>*</span>
               </Typography>
               <TextField
-                size='small' fullWidth margin="dense" type={'text'}
-                onChange={(e) => setStk(e.target.value)}>
+                size='small' fullWidth margin="dense" type='number'
+                name='STK'
+                onChange={handleInputChange}>
               </TextField>
             </Grid>
             <Grid item xs={6}>
@@ -319,7 +332,8 @@ const StoreRegister = () => {
               </Typography>
               <TextField
                 size='small' fullWidth margin="dense" type={'text'}
-                onChange={(e) => setNameBank(e.target.value)}>
+                name='NameBank'
+                onChange={handleInputChange}>
               </TextField>
             </Grid>
             <Grid item xs={6}>
@@ -328,15 +342,22 @@ const StoreRegister = () => {
               </Typography>
               <TextField
                 size='small' fullWidth margin="dense" type={'text'}
-                onChange={(e) => setBankBranch(e.target.value)}
-                error={helperText}
+                onChange={handleInputChange}
+                name='BankBranch'
+                error={Boolean(helperText)}
                 helperText={helperText}
-                onBlur={() => notifyText(bankBranch)}>
+              // onBlur={() => notifyText(bankBranch)}
+              >
               </TextField>
             </Grid>
           </Grid>
           <Divider sx={{ marginY: 2 }} />
           <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Snackbar open={open} autoHideDuration={5000} onClose={() => setOpen(false)}>
+              <Alert severity="error" variant="filled" onClose={() => setOpen(false)}>
+                Hãy nhập đủ thông tin
+              </Alert>
+            </Snackbar>
             <Button variant="contained" size="large"
               onClick={handleSubmit}
               sx={{
